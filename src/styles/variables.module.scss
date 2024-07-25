@@ -1,0 +1,34 @@
+/*
+ * @Author: 徐海瑞 
+ * @Date: 2023-02-20 10:57:02 
+ * @Last Modified by: 徐海瑞
+ * @Last Modified time: 2023-08-29 10:02:02
+ js文件中使用的scss变量
+
+ !!! 引入该文件,只能使用相对路径,例如 "../styles/variables.module.scss",若使用"@/...."打包会报错
+ */
+
+$workarea-lock: #ff000c; //作业区封锁
+$workarea-unlock: #2d3c4d; // 作业区未封锁
+$workarea-select: #ff5900; // 采集模式下无作业目标信息点选作业区
+$soilblock-select: #5f3d31; // 采集模式下无作业目标信息带选排土块
+$workarea-unselect: #2d3c4d; // 采集模式下取消点选作业区
+$soilblock-open: #00ff42; // 排土块/点 开启
+$soilblock-close: #ff0000; // 排土块/点 关闭
+$soilblock-distribute: #ffed3a; // 排土块/点 已分配
+$aroundcar-distance-safe: #ffd800; // 周边矿卡离辅助车辆距离正常
+$aroundcar-distance-warning: #ff1515; //周边车辆离辅助车辆距离很近
+
+// 导出
+:export {
+  color_workarea_lock: $workarea-lock;
+  color_workarea_unlock: $workarea-unlock;
+  color_workarea_select: $workarea-select;
+  color_soilblock_select: $soilblock-select;
+  color_workarea_unselect: $workarea-unselect;
+  color_soilblock_open: $soilblock-open;
+  color_soilblock_close: $soilblock-close;
+  color_soilblock_distribute: $soilblock-distribute;
+  color_aroundcar_safe: $aroundcar-distance-safe;
+  color_aroundcar_warning: $aroundcar-distance-warning;
+}
