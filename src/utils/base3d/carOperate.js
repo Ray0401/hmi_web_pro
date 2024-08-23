@@ -2,7 +2,7 @@
  * @Author: 徐海瑞
  * @Date: 2023-03-08 14:17:33
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2024-08-22 15:45:07
+ * @Last Modified time: 2024-08-23 10:21:29
  *
  * 车辆模型相关操作
  *
@@ -31,7 +31,7 @@ function loadCar2(type = 100, data) {
       let loader = new OBJLoader();
       loader.setMaterials(materials);
       loader.load(
-        new URL(matchModel(model, 'obj'), import.meta.url).href,
+        matchModel(model, 'obj'),
         obj => {
           obj.traverse(item => {
             if (item.material && Array.isArray(item.material)) {

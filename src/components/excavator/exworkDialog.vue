@@ -411,7 +411,7 @@
         </div>
 
         <!-- 装载模式自动指点和手动指点 -->
-        <div class="content-box" v-if="clickItemId!==8 && clickItemId!==9">
+        <div class="content-box" v-if="clickItemId !== 8 && clickItemId !== 9">
           <div class="detail-title">自动调整</div>
           <div class="detail-mode-btn-box">
             <!-- 单侧装载自动指点 -->

@@ -27,7 +27,7 @@ export const vueI18n = {
         this.$store.commit('setMessageList', text);
         sendMsgToBackend(text);
       }
-      // this.$toast({ title: text, icon: 'none' });
+      this.$toast(text);
     },
   },
 };

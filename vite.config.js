@@ -55,6 +55,7 @@ export default defineConfig(({ mode }) => {
     },
     build: {
       cssCodeSplit: true, // 启用 CSS 分割
+      assetsInlineLimit: 0, // 禁用文件内联，所有文件都将被打包
       minify: 'terser',
       terserOptions: {
         compress: {
