@@ -12,8 +12,10 @@ export default defineConfig(({ mode }) => {
       vue(),
       replace({
         [isWsMock]: isDev ? isWsMock : 'no',
+        preventAssignment: true, // 添加这个选项
       }),
     ],
+    assetsInclude: ['**/*.obj', '**/*.mtl'],
     base: isDev ? '/' : './',
     outDir: 'dist',
     resolve: {
@@ -38,7 +40,7 @@ export default defineConfig(({ mode }) => {
         scss: {
           // 引入 variables.scss 这样就可以在全局中使用 variables.scss中预定义的变量了
           // 给导入的路径最后加上 ;
-          additionalData: `@import "./src/assets/css/variables.scss";`,
+          // additionalData: `@import "./src/assets/css/variables.scss";`,
         },
       },
     },
@@ -49,6 +51,23 @@ export default defineConfig(({ mode }) => {
       https: false,
       hmr: {
         overlay: false,
+      },
+    },
+    build: {
+      cssCodeSplit: true, // 启用 CSS 分割
+      minify: 'terser',
+      terserOptions: {
+        compress: {
+          drop_console: true,
+          drop_debugger: true,
+        },
+      },
+      rollupOptions: {
+        output: {
+          chunkFileNames: 'js/[name]-[hash].js', // 引入文件名的名称
+          entryFileNames: 'js/[name]-[hash].js', // 包的入口文件名称
+          assetFileNames: '[ext]/[name]-[hash].[ext]', // 资源文件像 字体，图片等
+        },
       },
     },
   };

@@ -39,7 +39,6 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-# map_Kd C:/Users/li520/Desktop/挖机/挖机/Volumes/工作/简单挖土机/_Concrete_rough_.jpg
 
 newmtl _CorrogateRust_.003
 Ns 0.000000
@@ -49,7 +48,6 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-# map_Kd C:/Users/li520/Desktop/挖机/挖机/Volumes/工作/简单挖土机/_CorrogateRust_.jpg
 
 newmtl _Silver_.003
 Ns 0.000000

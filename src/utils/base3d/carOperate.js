@@ -2,7 +2,7 @@
  * @Author: 徐海瑞
  * @Date: 2023-03-08 14:17:33
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2024-07-17 19:02:09
+ * @Last Modified time: 2024-08-22 15:45:07
  *
  * 车辆模型相关操作
  *
@@ -15,18 +15,23 @@ import variables from '../../styles/variables.module.scss';
 import { getAssetsFile, matchVehicleModel } from '../utils';
 const { color_aroundcar_safe, color_aroundcar_warning } = variables;
 
+function matchModel(name, ext) {
+  const url = new URL(`../../assets/models/${name}.${ext}`, import.meta.url);
+  return url.href;
+}
+
 // 加载车辆
 function loadCar2(type = 100, data) {
   const model = matchVehicleModel(type);
   if (!model) return;
   return new Promise((resolve, reject) => {
     let mtlLoader = new MTLLoader();
-    mtlLoader.load(getAssetsFile(`models/${model}.mtl`), materials => {
+    mtlLoader.load(matchModel(model, 'mtl'), materials => {
       materials.preload();
       let loader = new OBJLoader();
       loader.setMaterials(materials);
       loader.load(
-        getAssetsFile(`models/${model}.obj`),
+        new URL(matchModel(model, 'obj'), import.meta.url).href,
         obj => {
           obj.traverse(item => {
             if (item.material && Array.isArray(item.material)) {
@@ -82,7 +87,6 @@ function loadCar2(type = 100, data) {
             // let drag = new DragControls([this.carModel],this.camera2, this.renderer)
             this.carModel = obj;
             this.carGroup.add(this.carModel);
-
             // console.log('this.carGroup.position', this.carGroup.position);
             this.carGroup.rotateZ(THREE.MathUtils.degToRad(90));
             this.carGroup.renderOrder = 1;

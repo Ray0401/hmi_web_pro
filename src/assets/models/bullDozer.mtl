@@ -40,7 +40,6 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-# map_Kd 推土机/cnwhc_com______3rRO4TSX.png
 
 newmtl cnwhc_com______EjmRxAH1
 Ns 0.000000
@@ -121,7 +120,6 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 0.800000
 illum 9
-# map_Kd 推土机/cnwhc_com______gnZub0A7.jpg
 
 newmtl cnwhc_com______hKcR7NE8
 Ns 0.000000

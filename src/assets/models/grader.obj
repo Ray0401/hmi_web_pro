@@ -1,6 +1,5 @@
 # Blender v3.0.0 OBJ File: ''
 # www.blender.org
-mtllib grader.mtl
 o Default
 v 0.638293 0.930586 0.105489
 v 0.638293 0.930586 -0.159268

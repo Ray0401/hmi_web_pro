@@ -37,9 +37,12 @@
   const store = useStore();
 
   //亮度
-  axios.get(`http://127.0.0.1:3333?val=${store.state.brightness / 100}`).catch(error => {
-    console.log('brightness error', error);
-  });
+  try {
+    axios.get(`http://127.0.0.1:3333?val=${store.state.brightness / 100}`);
+  } catch (error) {
+    console.log('error', error);
+  }
+
   const terminalType = ref(null);
   const showNum = ref(0);
   const showModal = ref(false);

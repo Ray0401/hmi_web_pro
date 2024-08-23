@@ -182,7 +182,7 @@
         showDefalutFlag: false,
         messagelistFlag: false,
         uploadAddr: '',
-        mapSleep: 1,
+        mapSleep: 0,
       };
     },
     created() {
