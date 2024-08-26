@@ -6,7 +6,7 @@
     right: 0;
     bottom: 0;
     font-weight: bold;
-    background: url('../../static/images/sleep_bg.png') center/cover no-repeat;
+    background: url('../../assets/images/sleep_bg.png') center/cover no-repeat;
     display: flex;
     justify-content: center;
     align-items: center;

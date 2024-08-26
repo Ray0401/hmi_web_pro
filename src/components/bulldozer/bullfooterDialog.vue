@@ -184,7 +184,7 @@
   };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   @keyframes BToU {
     0% {
       bottom: -100vh;

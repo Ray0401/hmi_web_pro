@@ -50,7 +50,7 @@
   };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   @import '@/assets/css/common.scss';
   .headerright-rtk {
     padding: 0 10px 0 14px;

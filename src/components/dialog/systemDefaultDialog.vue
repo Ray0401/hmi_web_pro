@@ -79,7 +79,7 @@ close 关闭按钮
   };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .mask-box {
     width: 100%;
     height: 100%;

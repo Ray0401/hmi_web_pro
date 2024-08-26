@@ -16,7 +16,7 @@
   };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .modal-warp {
     width: 100%;
     height: 100%;

@@ -1,384 +1,3 @@
-<template>
-  <div>
-    <div class="work-dialog-outer">
-      <div class="work-dialog-inner">
-        <div class="setting-text">{{ toLang('settings') }}</div>
-        <div class="extra" v-if="warn && currencyTerminal">
-          <div class="extra-one">
-            <span>车道偏离/逆行报警</span>
-          </div>
-          <div class="extra-two">
-            <toggle-button @change="switchChange" color="#3EC3E1" :value="checkoutInfo.checked" />
-          </div>
-        </div>
-
-        <div class="setting-content">
-          <!-- <div class="setting-progress-box">
-            <div class="setting-brightness" v-for="(list, index) in progressList">
-              <div class="setting-brightness-text">
-                {{ list.text }}
-              </div>
-              <div class="setting-brightness-progress">
-                <div class="setting-dis-btn" @click="decrease(list, index)">-</div>
-                <div class="setting-progress-bar-box">
-                  <progress
-                    :percent="index == 0 ? $store.state.brightness : $store.state.volume"
-                    stroke-width="10"
-                    backgroundColor="#394059"
-                    activeColor="#fe5b00"
-                  />
-                </div>
-
-                <div class="setting-dis-btn" @click="increase(list, index)">+</div>
-              </div>
-            </div>
-          </div> -->
-
-          <!-- 车辆偏离/逆行告警 -->
-          <div class="retrogradeWarning" v-if="[ADOPT, SOIL, CURRENCY].includes($store.state.vehicleData.terminalType)">
-            <div class="text">车辆偏离/逆行告警</div>
-            <toggle-button
-              color="#FF5900"
-              :width="70"
-              :height="35"
-              :value="retrogradWarning"
-              @change="switchRetrogradWarningChange"
-            />
-          </div>
-          <!-- 周边矿卡语音告警 -->
-          <div class="voiceWarning" v-if="[ADOPT, SOIL, CURRENCY].includes($store.state.vehicleData.terminalType)">
-            <div class="text">周边矿卡语音告警</div>
-            <toggle-button
-              color="#FF5900"
-              :width="70"
-              :height="35"
-              :value="voiceWarning"
-              @change="switchVoiceWarningChange"
-            />
-          </div>
-
-          <div class="voiceWarning" v-if="[ADOPT, SOIL, CURRENCY].includes($store.state.vehicleData.terminalType)">
-            <div class="text">网格辅助线</div>
-            <toggle-button color="#FF5900" :width="70" :height="35" :value="gridLine" @change="switchGridLine" />
-          </div>
-
-          <div class="setting-btn-box">
-            <div class="setting-btn" @click="debugging()">
-              <span>{{ toLang('systemDebugging') }}</span>
-            </div>
-            <div class="setting-btn" @click="currentVersion()">
-              <span>{{ toLang('view') + toLang('currentVersion') }}</span>
-              <div class="setting-btn-newicon" v-if="hasNewVersion">{{ toLang('updateAvailable') }}</div>
-            </div>
-            <div class="setting-btn" @click="reloadFn">
-              <span>刷新</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- </div> -->
-      <close-dialog v-if="!checkVersionFlag && !systemdebugFlag" type="right" @click="closebtn()"></close-dialog>
-    </div>
-
-    <div class="work-dialog-aside-outer version-list-outer" v-if="checkVersionFlag">
-      <div class="work-dialog-aside-inner">
-        <div class="" style="color: #fff" v-if="!newVersionFlag">
-          <div class="version-box">
-            <div class="version-title">{{ toLang('currentVersion') }}</div>
-            <div class="version-list-box">
-              <div class="version-list" v-for="(item, index) in versionList">
-                <div class="version-name">{{ item.type }}</div>
-                <div class="version-num">{{ item.version }}</div>
-              </div>
-            </div>
-            <div class="version-new-btn" @click="newversion()" v-if="hasNewVersion">
-              {{ toLang('view') + toLang('newVersion') }}
-            </div>
-          </div>
-        </div>
-        <div class="new-version-box" v-if="newVersionFlag">
-          <div class="new-version-title">
-            <span class="new-version-title-text">{{ toLang('newVersion') }}</span>
-            <div class="new-version-title-texticon">40M</div>
-          </div>
-          <div class="update-version-text">{{ toLang('updateLog') }}</div>
-          <div class="new-version-list-box">
-            <div class="new-version-list" v-for="item in newVersionList">
-              <div class="new-version-list-title">
-                <span class="new-version-list-name">{{ item.name }}</span>
-                <span class="new-version-list-num">{{ item.num }}</span>
-              </div>
-              <div class="new-version-list-detail" v-for="detail in item.context">
-                <div class="new-version-list-detail-text">{{ detail }}</div>
-              </div>
-            </div>
-          </div>
-          <div class="version-install-btn" @click.stop="installbtn()">
-            {{ toLang('experience') + toLang('newVersion') }}
-          </div>
-          <div class="install-state-des-list-box">
-            <div class="install-state-des-list" v-for="list in statedeslist">
-              <img :src="list.icon" class="install-state-des-icon" />
-              <div class="install-state-des-text">
-                {{ list.text }}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <close-dialog type="right" class="aside-close-btn" @click="closeMainAsideBtn()"></close-dialog>
-    </div>
-
-    <div class="work-dialog-aside-outer" v-if="systemdebugFlag">
-      <div class="work-dialog-aside-inner">
-        <div class="" style="color: #fff">
-          <div class="version-box">
-            <div class="version-title">{{ toLang('systemDebugging') }}</div>
-            <div class="version-title">{{ toLang('noteWarning') }}</div>
-            <button-dialog @click="clearLocalStrage">清除缓存</button-dialog>
-          </div>
-        </div>
-      </div>
-      <div class="aside-close-btn" @click="closeSecondAsideBtn()"></div>
-      <close-dialog type="right" class="aside-close-btn" @click="closeSecondAsideBtn()"></close-dialog>
-    </div>
-  </div>
-</template>
-
-<script>
-  import closeDialog from '@/components/dialog/closeButton.vue';
-  import axios from 'axios';
-  import { sendMsgToBackend, sendSocket, speak } from '@/utils/utils';
-  import { ADOPT, SOIL, CURRENCY } from '@/constant/index';
-
-  export default {
-    name: 'settingPage',
-    components: {
-      closeDialog,
-    },
-    props: {
-      warn: {
-        type: Boolean,
-        default: false,
-      },
-      currencyTerminal: {
-        type: Boolean,
-        default: false,
-      },
-      versionList: {
-        type: Array,
-        default: [],
-      },
-      messagelist: {
-        type: Array,
-        default: [],
-      },
-    },
-    data() {
-      return {
-        ADOPT,
-        SOIL,
-        CURRENCY,
-        retrogradWarning: false,
-        voiceWarning: false,
-        systemdebugFlag: false,
-        asideCloseicon: '/assets/images/closeicon.png',
-        progressList: [
-          {
-            text: this.toLang('brightness'),
-            percent: this.$store.state.brightness,
-          },
-          {
-            text: this.toLang('volume'),
-            percent: this.$store.state.volume,
-          },
-        ],
-        checkoutInfo: {
-          isShowEle: true,
-          checked: false,
-        },
-        newVersionList: [
-          {
-            name: 'ICU',
-            num: 'V02.02.00.01',
-            context: ['增加文案增加文案增加文案增加文案增加文案', '优化文案修复文案', '修复文案修复文案'],
-          },
-          {
-            name: 'CGU',
-            num: 'V02.02.00.01',
-            context: ['增加文案增加文案增加文案增加文案增加文案', '优化文案修复文案', '修复文案修复文案'],
-          },
-          {
-            name: 'CGU',
-            num: 'V02.02.00.01',
-            context: ['增加文案增加文案增加文案增加文案增加文案', '优化文案修复文案', '修复文案修复文案'],
-          },
-          {
-            name: 'CGU',
-            num: 'V02.02.00.01',
-            context: ['增加文案增加文案增加文案增加文案增加文案', '优化文案修复文案', '修复文案修复文案'],
-          },
-          {
-            name: 'CGU',
-            num: 'V02.02.00.01',
-            context: ['增加文案增加文案增加文案增加文案增加文案', '优化文案修复文案', '修复文案修复文案'],
-          },
-        ],
-        statedeslist: [
-          {
-            icon: '/assets/images/assetsSuccess.png',
-            text: '档位为P档',
-          },
-          {
-            icon: '/assets/images/assetsFault.png',
-            text: '无调度任务',
-          },
-        ],
-        hasNewVersion: false,
-        newVersionFlag: false,
-        checkVersionFlag: false,
-        gridLine: false,
-      };
-    },
-    computed: {},
-
-    created() {
-      this.gridLine = this.$store.state.excavator.showGridLine;
-
-      // uni.getScreenBrightness({
-      //   success: function (res) {
-      //     console.log('屏幕亮度值：' + res.value);
-      //   },
-      // });
-
-      this.voiceWarning = Boolean(Number(localStorage.getItem('switchVoiceWarning') || 0));
-      this.retrogradWarning = Boolean(Number(localStorage.getItem('switchRetrogradWarning') || 0));
-    },
-
-    methods: {
-      reloadFn() {
-        window.location.reload();
-      },
-      clearLocalStrage() {
-        localStorage.clear();
-      },
-      debugging() {
-        this.systemdebugFlag = true;
-        this.checkVersionFlag = false;
-        this.newVersionFlag = false;
-      },
-      //change方法
-      switchChange(e) {
-        this.checkoutInfo.checked = !this.checkoutInfo.checked;
-      },
-      handleClick(e) {
-        console.log(e.checked);
-      },
-      currentVersion() {
-        // console.log('当前版本');
-        this.checkVersionFlag = true;
-        this.systemdebugFlag = false;
-        // this.socket.send(JSON.stringify({
-        // 	"type": "registerClient",
-        // 	"name": "hmi"
-        // }))
-        this.socket.send(
-          JSON.stringify({
-            type: 'ReqVersion',
-          })
-        );
-      },
-      newversion() {
-        this.newVersionFlag = true;
-      },
-      closebtn() {
-        this.$emit('close');
-        this.$bus.$emit('exitGather');
-        this.$bus.$emit('resetBtnClickIndex');
-      },
-      closeMainAsideBtn() {
-        this.checkVersionFlag = false;
-        this.newVersionFlag = false;
-      },
-      closeSecondAsideBtn() {
-        console.log(11111);
-        this.systemdebugFlag = false;
-      },
-
-      decrease(list, index) {
-        if (list.percent >= 10) {
-          list.percent -= 10;
-          if (index == 0) {
-            if (list.percent < 10) {
-              list.percent = 10;
-              return this.$toast('亮度已降到最低');
-            }
-            this.$store.commit('setBrightness', list.percent);
-            axios.get(`http://127.0.0.1:3333?val=${list.percent / 100}`).then(res => {});
-          }
-          if (index == 1) {
-            this.$store.commit('setVolume', list.percent);
-            sendSocket({
-              type: 'VoicePlayVolume',
-              volume: list.percent,
-            });
-          }
-        } else {
-          list.percent = 0;
-          this.$toast(list.text + '已降到最低');
-        }
-      },
-      increase(list, index) {
-        if (list.percent <= 90) {
-          list.percent += 10;
-          if (index == 0) {
-            this.$store.commit('setBrightness', list.percent);
-            axios.get(`http://127.0.0.1:3333?val=${list.percent / 100}`);
-          }
-          if (index == 1) {
-            this.$store.commit('setVolume', list.percent);
-            sendSocket({
-              type: 'VoicePlayVolume',
-              volume: list.percent,
-            });
-          }
-        } else {
-          list.percent = 100;
-          this.$toast(list.text + '已调到最高');
-        }
-      },
-      // 周边矿卡语音告警开关
-      switchVoiceWarningChange(e) {
-        const checked = e.value;
-        localStorage.setItem('switchVoiceWarning', Number(checked));
-        this.$store.commit('setMessageList', `周边矿卡语音告警${checked ? '开启' : '关闭'}`);
-        sendMsgToBackend(`周边矿卡语音告警${checked ? '开启' : '关闭'}`);
-        // speak(`周边矿卡语音告警${checked ? '开启' : '关闭'}`, 6);
-
-        sendSocket({
-          type: 'closeVoice',
-          status: Number(checked),
-        });
-      },
-      // 车道偏离
-      switchRetrogradWarningChange(e) {
-        const checked = e.value;
-        localStorage.setItem('switchRetrogradWarning', Number(checked));
-        this.$store.commit('setMessageList', `车辆偏离和逆行告警${checked ? '开启' : '关闭'}`);
-        sendMsgToBackend(`车辆偏离和逆行告警${checked ? '开启' : '关闭'}`);
-
-        // speak(`车道偏离和逆行告警${checked ? '开启' : '关闭'}`, 6);
-      },
-
-      // 网格线
-      switchGridLine(val) {
-        this.$store.commit('excavator/setGridLine', val.value);
-        this.$bus.$emit('switchGridLine', val.value);
-      },
-    },
-  };
-</script>
-
 <style lang="scss" scoped>
   @import '@/assets/css/common.scss';
   .version-list-outer {
@@ -766,3 +385,384 @@
     }
   }
 </style>
+
+<template>
+  <div>
+    <div class="work-dialog-outer">
+      <div class="work-dialog-inner">
+        <div class="setting-text">{{ toLang('settings') }}</div>
+        <div class="extra" v-if="warn && currencyTerminal">
+          <div class="extra-one">
+            <span>车道偏离/逆行报警</span>
+          </div>
+          <div class="extra-two">
+            <toggle-button @change="switchChange" color="#3EC3E1" :value="checkoutInfo.checked" />
+          </div>
+        </div>
+
+        <div class="setting-content">
+          <!-- <div class="setting-progress-box">
+            <div class="setting-brightness" v-for="(list, index) in progressList">
+              <div class="setting-brightness-text">
+                {{ list.text }}
+              </div>
+              <div class="setting-brightness-progress">
+                <div class="setting-dis-btn" @click="decrease(list, index)">-</div>
+                <div class="setting-progress-bar-box">
+                  <progress
+                    :percent="index == 0 ? $store.state.brightness : $store.state.volume"
+                    stroke-width="10"
+                    backgroundColor="#394059"
+                    activeColor="#fe5b00"
+                  />
+                </div>
+
+                <div class="setting-dis-btn" @click="increase(list, index)">+</div>
+              </div>
+            </div>
+          </div> -->
+
+          <!-- 车辆偏离/逆行告警 -->
+          <div class="retrogradeWarning" v-if="[ADOPT, SOIL, CURRENCY].includes($store.state.vehicleData.terminalType)">
+            <div class="text">车辆偏离/逆行告警</div>
+            <toggle-button
+              color="#FF5900"
+              :width="70"
+              :height="35"
+              :value="retrogradWarning"
+              @change="switchRetrogradWarningChange"
+            />
+          </div>
+          <!-- 周边矿卡语音告警 -->
+          <div class="voiceWarning" v-if="[ADOPT, SOIL, CURRENCY].includes($store.state.vehicleData.terminalType)">
+            <div class="text">周边矿卡语音告警</div>
+            <toggle-button
+              color="#FF5900"
+              :width="70"
+              :height="35"
+              :value="voiceWarning"
+              @change="switchVoiceWarningChange"
+            />
+          </div>
+
+          <div class="voiceWarning" v-if="[ADOPT, SOIL, CURRENCY].includes($store.state.vehicleData.terminalType)">
+            <div class="text">网格辅助线</div>
+            <toggle-button color="#FF5900" :width="70" :height="35" :value="gridLine" @change="switchGridLine" />
+          </div>
+
+          <div class="setting-btn-box">
+            <div class="setting-btn" @click="debugging()">
+              <span>{{ toLang('systemDebugging') }}</span>
+            </div>
+            <div class="setting-btn" @click="currentVersion()">
+              <span>{{ toLang('view') + toLang('currentVersion') }}</span>
+              <div class="setting-btn-newicon" v-if="hasNewVersion">{{ toLang('updateAvailable') }}</div>
+            </div>
+            <div class="setting-btn" @click="reloadFn">
+              <span>刷新</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- </div> -->
+      <close-dialog v-if="!checkVersionFlag && !systemdebugFlag" type="right" @click="closebtn()"></close-dialog>
+    </div>
+
+    <div class="work-dialog-aside-outer version-list-outer" v-if="checkVersionFlag">
+      <div class="work-dialog-aside-inner">
+        <div class="" style="color: #fff" v-if="!newVersionFlag">
+          <div class="version-box">
+            <div class="version-title">{{ toLang('currentVersion') }}</div>
+            <div class="version-list-box">
+              <div class="version-list" v-for="(item, index) in versionList">
+                <div class="version-name">{{ item.type }}</div>
+                <div class="version-num">{{ item.version }}</div>
+              </div>
+            </div>
+            <div class="version-new-btn" @click="newversion()" v-if="hasNewVersion">
+              {{ toLang('view') + toLang('newVersion') }}
+            </div>
+          </div>
+        </div>
+        <div class="new-version-box" v-if="newVersionFlag">
+          <div class="new-version-title">
+            <span class="new-version-title-text">{{ toLang('newVersion') }}</span>
+            <div class="new-version-title-texticon">40M</div>
+          </div>
+          <div class="update-version-text">{{ toLang('updateLog') }}</div>
+          <div class="new-version-list-box">
+            <div class="new-version-list" v-for="item in newVersionList">
+              <div class="new-version-list-title">
+                <span class="new-version-list-name">{{ item.name }}</span>
+                <span class="new-version-list-num">{{ item.num }}</span>
+              </div>
+              <div class="new-version-list-detail" v-for="detail in item.context">
+                <div class="new-version-list-detail-text">{{ detail }}</div>
+              </div>
+            </div>
+          </div>
+          <div class="version-install-btn" @click.stop="installbtn()">
+            {{ toLang('experience') + toLang('newVersion') }}
+          </div>
+          <div class="install-state-des-list-box">
+            <div class="install-state-des-list" v-for="list in statedeslist">
+              <img :src="list.icon" class="install-state-des-icon" />
+              <div class="install-state-des-text">
+                {{ list.text }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <close-dialog type="right" class="aside-close-btn" @click="closeMainAsideBtn()"></close-dialog>
+    </div>
+
+    <div class="work-dialog-aside-outer" v-if="systemdebugFlag">
+      <div class="work-dialog-aside-inner">
+        <div class="" style="color: #fff">
+          <div class="version-box">
+            <div class="version-title">{{ toLang('systemDebugging') }}</div>
+            <div class="version-title">{{ toLang('noteWarning') }}</div>
+            <button-dialog @click="clearLocalStrage">清除缓存</button-dialog>
+          </div>
+        </div>
+      </div>
+      <div class="aside-close-btn" @click="closeSecondAsideBtn()"></div>
+      <close-dialog type="right" class="aside-close-btn" @click="closeSecondAsideBtn()"></close-dialog>
+    </div>
+  </div>
+</template>
+
+<script>
+  import closeDialog from '@/components/dialog/closeButton.vue';
+  import axios from 'axios';
+  import { sendMsgToBackend, sendSocket, speak } from '@/utils/utils';
+  import { ADOPT, SOIL, CURRENCY } from '@/constant/index';
+
+  export default {
+    name: 'settingPage',
+    components: {
+      closeDialog,
+    },
+    props: {
+      warn: {
+        type: Boolean,
+        default: false,
+      },
+      currencyTerminal: {
+        type: Boolean,
+        default: false,
+      },
+      versionList: {
+        type: Array,
+        default: [],
+      },
+      messagelist: {
+        type: Array,
+        default: [],
+      },
+    },
+    data() {
+      return {
+        ADOPT,
+        SOIL,
+        CURRENCY,
+        retrogradWarning: false,
+        voiceWarning: false,
+        systemdebugFlag: false,
+        asideCloseicon: '/assets/images/closeicon.png',
+        progressList: [
+          {
+            text: this.toLang('brightness'),
+            percent: this.$store.state.brightness,
+          },
+          {
+            text: this.toLang('volume'),
+            percent: this.$store.state.volume,
+          },
+        ],
+        checkoutInfo: {
+          isShowEle: true,
+          checked: false,
+        },
+        newVersionList: [
+          {
+            name: 'ICU',
+            num: 'V02.02.00.01',
+            context: ['增加文案增加文案增加文案增加文案增加文案', '优化文案修复文案', '修复文案修复文案'],
+          },
+          {
+            name: 'CGU',
+            num: 'V02.02.00.01',
+            context: ['增加文案增加文案增加文案增加文案增加文案', '优化文案修复文案', '修复文案修复文案'],
+          },
+          {
+            name: 'CGU',
+            num: 'V02.02.00.01',
+            context: ['增加文案增加文案增加文案增加文案增加文案', '优化文案修复文案', '修复文案修复文案'],
+          },
+          {
+            name: 'CGU',
+            num: 'V02.02.00.01',
+            context: ['增加文案增加文案增加文案增加文案增加文案', '优化文案修复文案', '修复文案修复文案'],
+          },
+          {
+            name: 'CGU',
+            num: 'V02.02.00.01',
+            context: ['增加文案增加文案增加文案增加文案增加文案', '优化文案修复文案', '修复文案修复文案'],
+          },
+        ],
+        statedeslist: [
+          {
+            icon: '/assets/images/assetsSuccess.png',
+            text: '档位为P档',
+          },
+          {
+            icon: '/assets/images/assetsFault.png',
+            text: '无调度任务',
+          },
+        ],
+        hasNewVersion: false,
+        newVersionFlag: false,
+        checkVersionFlag: false,
+        gridLine: false,
+      };
+    },
+    computed: {},
+
+    created() {
+      this.gridLine = this.$store.state.excavator.showGridLine;
+
+      // uni.getScreenBrightness({
+      //   success: function (res) {
+      //     console.log('屏幕亮度值：' + res.value);
+      //   },
+      // });
+
+      this.voiceWarning = Boolean(Number(localStorage.getItem('switchVoiceWarning') || 0));
+      this.retrogradWarning = Boolean(Number(localStorage.getItem('switchRetrogradWarning') || 0));
+    },
+
+    methods: {
+      reloadFn() {
+        window.location.reload();
+      },
+      clearLocalStrage() {
+        localStorage.clear();
+      },
+      debugging() {
+        this.systemdebugFlag = true;
+        this.checkVersionFlag = false;
+        this.newVersionFlag = false;
+      },
+      //change方法
+      switchChange(e) {
+        this.checkoutInfo.checked = !this.checkoutInfo.checked;
+      },
+      handleClick(e) {
+        console.log(e.checked);
+      },
+      currentVersion() {
+        // console.log('当前版本');
+        this.checkVersionFlag = true;
+        this.systemdebugFlag = false;
+        // this.socket.send(JSON.stringify({
+        // 	"type": "registerClient",
+        // 	"name": "hmi"
+        // }))
+        this.socket.send(
+          JSON.stringify({
+            type: 'ReqVersion',
+          })
+        );
+      },
+      newversion() {
+        this.newVersionFlag = true;
+      },
+      closebtn() {
+        this.$emit('close');
+        this.$bus.$emit('exitGather');
+        this.$bus.$emit('resetBtnClickIndex');
+      },
+      closeMainAsideBtn() {
+        this.checkVersionFlag = false;
+        this.newVersionFlag = false;
+      },
+      closeSecondAsideBtn() {
+        console.log(11111);
+        this.systemdebugFlag = false;
+      },
+
+      decrease(list, index) {
+        if (list.percent >= 10) {
+          list.percent -= 10;
+          if (index == 0) {
+            if (list.percent < 10) {
+              list.percent = 10;
+              return this.$toast('亮度已降到最低');
+            }
+            this.$store.commit('setBrightness', list.percent);
+            axios.get(`http://127.0.0.1:3333?val=${list.percent / 100}`).then(res => {});
+          }
+          if (index == 1) {
+            this.$store.commit('setVolume', list.percent);
+            sendSocket({
+              type: 'VoicePlayVolume',
+              volume: list.percent,
+            });
+          }
+        } else {
+          list.percent = 0;
+          this.$toast(list.text + '已降到最低');
+        }
+      },
+      increase(list, index) {
+        if (list.percent <= 90) {
+          list.percent += 10;
+          if (index == 0) {
+            this.$store.commit('setBrightness', list.percent);
+            axios.get(`http://127.0.0.1:3333?val=${list.percent / 100}`);
+          }
+          if (index == 1) {
+            this.$store.commit('setVolume', list.percent);
+            sendSocket({
+              type: 'VoicePlayVolume',
+              volume: list.percent,
+            });
+          }
+        } else {
+          list.percent = 100;
+          this.$toast(list.text + '已调到最高');
+        }
+      },
+      // 周边矿卡语音告警开关
+      switchVoiceWarningChange(e) {
+        const checked = e.value;
+        localStorage.setItem('switchVoiceWarning', Number(checked));
+        this.$store.commit('setMessageList', `周边矿卡语音告警${checked ? '开启' : '关闭'}`);
+        sendMsgToBackend(`周边矿卡语音告警${checked ? '开启' : '关闭'}`);
+        // speak(`周边矿卡语音告警${checked ? '开启' : '关闭'}`, 6);
+
+        sendSocket({
+          type: 'closeVoice',
+          status: Number(checked),
+        });
+      },
+      // 车道偏离
+      switchRetrogradWarningChange(e) {
+        const checked = e.value;
+        localStorage.setItem('switchRetrogradWarning', Number(checked));
+        this.$store.commit('setMessageList', `车辆偏离和逆行告警${checked ? '开启' : '关闭'}`);
+        sendMsgToBackend(`车辆偏离和逆行告警${checked ? '开启' : '关闭'}`);
+
+        // speak(`车道偏离和逆行告警${checked ? '开启' : '关闭'}`, 6);
+      },
+
+      // 网格线
+      switchGridLine(val) {
+        this.$store.commit('excavator/setGridLine', val.value);
+        this.$bus.$emit('switchGridLine', val.value);
+      },
+    },
+  };
+</script>

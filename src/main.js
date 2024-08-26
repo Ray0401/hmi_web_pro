@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
 import 'normalize.css';
-import './assets/css/common.scss';
+
 import store from './store';
 import router from './router';
 import md5 from 'js-md5';

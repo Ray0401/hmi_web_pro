@@ -125,71 +125,73 @@
 </style>
 
 <template>
-  <div class="work-dialog-outer">
-    <div class="work-dialog-inner">
-      <div class="logged-in-content">
-        <div class="login-title">
-          <span v-if="!loggedFlag">{{ toLang('login') }}</span>
-          <span v-else>{{ toLang('user') }}</span>
-        </div>
-        <div class="" v-if="!loggedFlag">
-          <div class="input-list">
-            <span class="input-name">工号</span>
-            <input
-              type="text"
-              class="input-box"
-              id="user-name"
-              v-model="userInfoList.userName"
-              @change="usernamechange"
-              @focus="usernamefocus"
-              placeholder="请输入4位工号"
-            />
+  <div>
+    <div class="work-dialog-outer">
+      <div class="work-dialog-inner">
+        <div class="logged-in-content">
+          <div class="login-title">
+            <span v-if="!loggedFlag">{{ toLang('login') }}</span>
+            <span v-else>{{ toLang('user') }}</span>
           </div>
-          <div class="input-list">
-            <span class="input-name">{{ toLang('password') }}</span>
-            <input
-              class="input-box"
-              v-model="userInfoList.passWord"
-              password
-              type="text"
-              @blur="passwordblur"
-              @change="passwordchange"
-              @focus="passwordfocus"
-              placeholder="请输入6位密码"
-            />
+          <div class="" v-if="!loggedFlag">
+            <div class="input-list">
+              <span class="input-name">工号</span>
+              <input
+                type="text"
+                class="input-box"
+                id="user-name"
+                v-model="userInfoList.userName"
+                @change="usernamechange"
+                @focus="usernamefocus"
+                placeholder="请输入4位工号"
+              />
+            </div>
+            <div class="input-list">
+              <span class="input-name">{{ toLang('password') }}</span>
+              <input
+                class="input-box"
+                v-model="userInfoList.passWord"
+                password
+                type="text"
+                @blur="passwordblur"
+                @change="passwordchange"
+                @focus="passwordfocus"
+                placeholder="请输入6位密码"
+              />
+            </div>
+            <div class="keyboard">
+              <div class="keyboardimage" v-for="item in keyboard" @click.stop="statebtn(item)">
+                <span>{{ item }}</span>
+              </div>
+            </div>
           </div>
-          <div class="keyboard">
-            <div class="keyboardimage" v-for="item in keyboard" @click.stop="statebtn(item)">
-              <span>{{ item }}</span>
+          <div class="" v-else>
+            <div class="login-message-list">
+              <span class="login-message-list-name">设备编号</span>
+              <span class="login-message-list-num">{{ devName }}</span>
+            </div>
+            <div class="login-message-list">
+              <span class="login-message-list-name">司机姓名</span>
+              <span class="login-message-list-num">{{ userInfoList.userName }}</span>
+            </div>
+            <div class="login-message-list">
+              <span class="login-message-list-name">司机工号</span>
+              <span class="login-message-list-num">{{ userInfoList.driveNum }}</span>
+            </div>
+            <div class="login-message-list">
+              <span class="login-message-list-name">登录时间</span>
+              <span class="login-message-list-num">{{ userInfoList.loginTime }}</span>
             </div>
           </div>
         </div>
-        <div class="" v-else>
-          <div class="login-message-list">
-            <span class="login-message-list-name">设备编号</span>
-            <span class="login-message-list-num">{{ devName }}</span>
-          </div>
-          <div class="login-message-list">
-            <span class="login-message-list-name">司机姓名</span>
-            <span class="login-message-list-num">{{ userInfoList.userName }}</span>
-          </div>
-          <div class="login-message-list">
-            <span class="login-message-list-name">司机工号</span>
-            <span class="login-message-list-num">{{ userInfoList.driveNum }}</span>
-          </div>
-          <div class="login-message-list">
-            <span class="login-message-list-name">登录时间</span>
-            <span class="login-message-list-num">{{ userInfoList.loginTime }}</span>
-          </div>
+
+        <div class="log-btn" v-if="loggedFlag">
+          <button-dialog type="red" @click="logOut">{{ toLang('signOut') }}</button-dialog>
         </div>
       </div>
-
-      <div class="log-btn" v-if="loggedFlag">
-        <button-dialog type="red" @click="logOut">{{ toLang('signOut') }}</button-dialog>
+      <div v-if="!asideShowFlag">
+        <close-dialog type="right" @click="closebtn()"></close-dialog>
       </div>
-    </div>
-    <div v-if="!asideShowFlag">
-      <close-dialog type="right" @click="closebtn()"></close-dialog>
     </div>
   </div>
 </template>

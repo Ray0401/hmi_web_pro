@@ -1,43 +1,45 @@
 <style lang="scss" scoped>
-  #map-scene {
-    position: absolute;
-    z-index: 0;
-  }
-  .zoom-box {
-    width: 60px;
-    position: absolute;
-    right: 15px;
-    bottom: 141px;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    .position {
+  .hmi-map {
+    #map-scene {
+      position: absolute;
+      z-index: 0;
+    }
+    .zoom-box {
       width: 60px;
-      height: 60px;
-      margin-bottom: 10px;
-    }
-    .mode {
-      width: 60px;
-      height: 60px;
-      margin-bottom: 10px;
-    }
-    .line {
-      width: 100%;
-      height: 4px;
-      background: #404b51;
-    }
-    .img {
-      width: 60px;
-      height: 60px;
-    }
-    .v2v-show,
-    .v2v-hide {
-      margin-bottom: 10px;
+      position: absolute;
+      right: 15px;
+      bottom: 141px;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      .position {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 10px;
+      }
+      .mode {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 10px;
+      }
+      .line {
+        width: 100%;
+        height: 4px;
+        background: #404b51;
+      }
+      .img {
+        width: 60px;
+        height: 60px;
+      }
+      .v2v-show,
+      .v2v-hide {
+        margin-bottom: 10px;
+      }
     }
   }
 </style>
 <template>
-  <div class="">
+  <div class="hmi-map">
     <div class="scene" id="map-scene"></div>
     <div class="zoom-box">
       <img

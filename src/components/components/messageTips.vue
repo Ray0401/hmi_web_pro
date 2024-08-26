@@ -48,7 +48,7 @@
   };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .message-tips {
     position: absolute;
     top: 50px;

@@ -101,7 +101,7 @@
   };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .c-wrapper {
     background-image: url('../../assets/images/messagebg.png');
     position: absolute;

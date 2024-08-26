@@ -29,7 +29,7 @@
     },
   };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
   /* base */
   .close_button_init {
     width: 42px;

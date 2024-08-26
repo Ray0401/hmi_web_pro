@@ -1,17 +1,4 @@
-<template>
-  <div class="load-content">
-    <img class="imgs" src="@/assets/images/loadlogo.png" />
-  </div>
-</template>
-<script>
-  export default {
-    name: 'load',
-    props: {},
-    methods: {},
-  };
-</script>
-
-<style lang="scss">
+<style lang="scss" scoped>
   .load-content {
     width: 100%;
     height: 100%;
@@ -29,3 +16,14 @@
     }
   }
 </style>
+
+<template>
+  <div class="load-content">
+    <img class="imgs" src="@/assets/images/loadlogo.png" />
+  </div>
+</template>
+<script>
+  export default {
+    name: 'load',
+  };
+</script>

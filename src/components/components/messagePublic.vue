@@ -31,7 +31,7 @@
   };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .message-public {
     .footermessagebox {
       width: 320px;

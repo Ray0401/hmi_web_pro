@@ -1,5 +1,15 @@
+<style lang="scss" scoped>
+  .page-content {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    overflow: hidden;
+  }
+</style>
+
 <template>
-  <div class="content">
+  <div class="page-content">
     <Load v-if="!terminalType" />
     <Excavator v-if="terminalType == ADOPT" />
     <MineCard v-if="terminalType == MINE_CARD" />
@@ -105,13 +115,3 @@
     };
   };
 </script>
-
-<style lang="scss" scoped>
-  .content {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    background-color: #000;
-    overflow: hidden;
-  }
-</style>

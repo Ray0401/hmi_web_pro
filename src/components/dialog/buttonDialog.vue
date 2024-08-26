@@ -37,7 +37,7 @@
     },
   };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
   /* base */
   .button_init {
     display: inline-block;

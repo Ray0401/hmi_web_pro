@@ -88,7 +88,7 @@ importers:
         specifier: 1.77.6
         version: 1.77.6
       terser:
-        specifier: ^5.31.6
+        specifier: 5.31.6
         version: 5.31.6
       vite:
         specifier: 3.2.5

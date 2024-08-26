@@ -14,7 +14,7 @@
   };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .footer-public-content {
     .left-below-line {
       position: absolute;
