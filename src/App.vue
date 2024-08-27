@@ -1,10 +1,17 @@
-<script setup></script>
+<script setup>
+  import { setHTMLFontSize } from './utils/utils';
+  setHTMLFontSize(); // 设置根元素字体大小
+</script>
 
 <template>
   <router-view></router-view>
 </template>
 
 <style lang="scss">
+  html {
+    background: url('./assets/images/loadlogo.png') 100% 100% / cover no-repeat;
+  }
+
   .work-dialog-outer {
     width: 350px;
     display: flex;

@@ -6,7 +6,7 @@ import store from './store';
 import router from './router';
 import md5 from 'js-md5';
 // import { WebSocketClient } from '@/socket/index';
-import WebSocketClient from '@/utils/socket';
+// import WebSocketClient from '@/utils/socket';
 
 import eventBus from '@/utils/eventBus';
 Vue.prototype.$bus = eventBus;
@@ -60,23 +60,8 @@ import { ZH } from './lang/zh';
 Vue.use(VueI18n);
 Vue.mixin(vueI18n);
 
-// 动态设置ws url
-import { isWsMock, local_ws_url, ws_url, ws_reconnet_time } from './constant';
-const { host } = window.location;
-const target_url =
-  isWsMock == 'no'
-    ? host.includes('dev.tage.com')
-      ? ws_url
-      : host.includes('127.0.0.1')
-      ? local_ws_url
-      : `ws://${host}:8081/cmdstream`
-    : local_ws_url;
-console.log('target_url', target_url);
-const socket = new WebSocketClient(target_url, ws_reconnet_time);
-
 // 设置全局变量
 Vue.prototype.md5 = md5;
-Vue.prototype.socket = socket;
 
 // 挂载全局组件
 Vue.component('buttonDialog', buttonDialog);

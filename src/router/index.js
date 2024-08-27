@@ -20,6 +20,10 @@ VueRouter.prototype.replace = function replace(location, onResolve, onReject) {
 Vue.use(VueRouter);
 
 export const constantRoutes = [
+  // {
+  //   path: '/',
+  //   redirect: '/index',
+  // },
   {
     path: '/',
     name: 'Index',

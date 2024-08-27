@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import store from '../store';
-import { SOCKET_TYPE } from '@/constant';
+import { SOCKET_TYPE, isWsMock, local_ws_url, ws_url, ws_reconnet_time } from '@/constant';
 import * as THREE from 'three';
+import WebSocketClient from '@/utils/socket';
 
 // 动态引入图片
 export function getAssetsFile(url) {
@@ -69,6 +70,20 @@ export function setHTMLFontSize() {
 }
 // 时间戳转换格式
 
+export function initWebSocket() {
+  const { host } = window.location;
+  const target_url =
+    isWsMock == 'no'
+      ? host.includes('dev.tage.com')
+        ? ws_url
+        : host.includes('127.0.0.1')
+        ? local_ws_url
+        : `ws://${host}:8081/cmdstream`
+      : local_ws_url;
+  console.log('target_url', target_url);
+  let ws = new WebSocketClient(target_url, ws_reconnet_time);
+  Vue.prototype.socket = ws;
+}
 /**
  * 封装socket调用
  * @param {*} params

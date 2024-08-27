@@ -24,6 +24,7 @@ export default defineConfig(({ mode }) => {
         '@': path.resolve(__dirname, '.', 'src'),
         'three/examples': path.resolve(__dirname, 'node_modules/three/examples/'),
         three: path.resolve(__dirname, 'node_modules/three/build/three.module.js'),
+        brightness: path.resolve(__dirname, 'node_modules/brightness/lib/linux.js'),
       },
     },
     css: {
