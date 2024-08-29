@@ -165,7 +165,6 @@
         showSettingModal: false,
         excepthandflag: false,
         givePointflag: false,
-        // stepDistanceFlag: false, // 调整步距标志
         showGivePointBtn: false, // 面板是否显示指点按钮
         btnType: 'orange',
         // 头部数据

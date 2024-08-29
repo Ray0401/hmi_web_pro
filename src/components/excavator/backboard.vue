@@ -83,7 +83,6 @@
 <script>
   import ScrollText from './scroll-text.vue';
   import MessageModal from '../components/messageModal.vue';
-  import StepDistance from './stepDistance.vue';
   import { getAssetsFile } from '@/utils/utils';
 
   export default {
@@ -233,6 +232,7 @@
     .center {
       display: flex;
       justify-content: space-around;
+      align-items: center;
       position: absolute;
       top: 103px;
       left: 54px;
@@ -241,12 +241,13 @@
         height: 34px;
         background: rgba(247, 22, 22, 0.2);
         border: 2px solid #f71616;
-        // padding:31px 31px 18px 23px;
-
-        text-align: center;
-        line-height: 34px;
         margin-right: 5px;
+        display: flex;
         .text {
+          flex: 1;
+          display: flex;
+          justify-content: center;
+          align-items: center;
           font-size: 16px;
           font-family: SourceHanSansCN, SourceHanSansCN-Regular;
           font-weight: 400;
@@ -262,7 +263,7 @@
         }
       }
       .centerleft-right {
-        margin-top: 4px;
+        // margin-top: 4px;
         margin-left: 5px;
         box-sizing: border-box;
         width: 2px;
@@ -272,6 +273,8 @@
         margin-right: 10px;
       }
       .centerright {
+        display: flex;
+        align-items: center;
         font-size: 24px;
         font-family: SourceHanSansCN, SourceHanSansCN-Medium;
         font-weight: 500;
@@ -289,7 +292,9 @@
         margin-top: 5px;
       }
       .centerright-right {
-        margin-top: 4px;
+        // display: flex;
+        // align-items: center;
+        // margin-top: 4px;
         margin-right: 10px;
         box-sizing: border-box;
         width: 1px;
@@ -298,6 +303,8 @@
         background: linear-gradient(-90deg, #2e7ea0 0%);
       }
       .prestop {
+        display: flex;
+        align-items: center;
         margin-top: 5px;
         font-size: 16px;
         font-family: Source Han Sans CN, Source Han Sans CN-Regular;

@@ -188,14 +188,20 @@
   }
 
   .vue-scroll-picker {
-    width: 110px;
-    height: 270px;
+    // width: 110px;
+    flex: 1;
     margin-left: 21px;
     color: #fff;
 
+    .vue-scroll-picker-list {
+      left: 12px;
+      top: 26px;
+    }
+
     .vue-scroll-picker-item {
+      opacity: 0.5;
       height: 80px;
-      line-height: 80px;
+      // line-height: 60px;
       font-size: 32px;
     }
 

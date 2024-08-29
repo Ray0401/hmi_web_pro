@@ -1,19 +1,15 @@
 <style lang="scss" scoped>
   .box {
-    width: 129px;
+    display: flex;
     height: 460px;
     position: absolute;
     right: 0;
     z-index: 2;
-    top: 181px;
-    background-image: url('@/assets/images/anglePanel.png');
-    background-size: 100% 100%;
+    top: 47%;
+    transform: translateY(-50%);
 
     .angle-box {
-      position: absolute;
-      top: 0;
       width: 80px;
-      right: 129px;
       height: 460px;
       display: flex;
       flex-direction: column;
@@ -34,23 +30,30 @@
       }
     }
 
-    // display: flex;
-    .add {
-      width: 60px;
-      height: 60px;
-      margin-top: 30px;
-      margin-left: 40px;
-    }
-    .reduce {
-      margin-top: 0;
+    .picker-box {
+      width: 129px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: url('@/assets/images/anglePanel.png') left center / cover no-repeat;
+      padding: 30px 0;
+
+      .add {
+        width: 60px;
+        height: 60px;
+        margin-left: 40px;
+      }
+      .reduce {
+        width: 60px;
+        height: 60px;
+        margin-left: 40px;
+      }
     }
   }
 </style>
 <template>
   <div class="box">
-    <img src="../../assets/images/excavator/add.png" class="add" @click="pickerClick('add')" />
-    <scroll-picker :options="pickerList" v-model="pickerAngle"></scroll-picker>
-    <img src="../../assets/images/excavator/zoomOut.png" class="add reduce" @click="pickerClick('sub')" />
     <div class="angle-box">
       <span
         :class="{ angle: true, active: index == angleActiveIndex }"
@@ -60,6 +63,11 @@
       >
         {{ angle }}
       </span>
+    </div>
+    <div class="picker-box">
+      <img src="../../assets/images/excavator/add.png" class="add" @click="pickerClick('add')" />
+      <scroll-picker :options="pickerList" v-model="pickerAngle"></scroll-picker>
+      <img src="../../assets/images/excavator/zoomOut.png" class="reduce" @click="pickerClick('sub')" />
     </div>
   </div>
 </template>

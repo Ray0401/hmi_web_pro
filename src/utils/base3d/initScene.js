@@ -2,7 +2,7 @@
  * @Author: 徐海瑞
  * @Date: 2023-03-08 14:18:19
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2024-05-31 20:15:10
+ * @Last Modified time: 2024-08-29 14:26:35
  *
  * 初始化场景文件
  *
@@ -17,6 +17,7 @@ import Roads from '@/model/roads';
 import Point from '@/model/point';
 import WorkBouds from '@/model/workBouds';
 import workGroups from '@/model/workGroups';
+
 //初始化场景
 function initScene() {
   this.scene = new THREE.Scene();
@@ -83,6 +84,7 @@ function initRender() {
   this.labelRenderer.domElement.style.top = '0px';
   document.querySelector('#map-scene').appendChild(this.labelRenderer.domElement);
   document.querySelector('#map-scene').addEventListener('click', this.onMouseClick.bind(this), false);
+  // document.body.appendChild(this.stats.dom);
 }
 // 初始化相机组件
 function initControls() {

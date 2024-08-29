@@ -130,20 +130,15 @@
     }
 
     .box {
-      width: 129px;
+      display: flex;
       height: 460px;
-      position: fixed;
+      position: absolute;
       right: 0;
       z-index: 2;
-      top: 181px;
-      background-image: url('../../assets/images/anglePanel.png');
-      background-size: 100% 100%;
+      bottom: 180px;
 
       .angle-box {
-        position: absolute;
-        top: 0;
         width: 80px;
-        right: 129px;
         height: 460px;
         display: flex;
         flex-direction: column;
@@ -164,14 +159,25 @@
         }
       }
 
-      .add {
-        width: 60px;
-        height: 60px;
-        margin-top: 30px;
-        margin-left: 40px;
-      }
-      .reduce {
-        margin-top: 0;
+      .picker-box {
+        width: 129px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: url('@/assets/images/anglePanel.png') left center / cover no-repeat;
+        padding: 30px 0;
+
+        .add {
+          width: 60px;
+          height: 60px;
+          margin-left: 40px;
+        }
+        .reduce {
+          width: 60px;
+          height: 60px;
+          margin-left: 40px;
+        }
       }
     }
   }
@@ -232,7 +238,7 @@
     </div>
 
     <!-- 右侧旋转 -->
-    <div class="box">
+    <!-- <div class="box">
       <img src="../../assets/images/excavator/add.png" class="add" @click="pickerClick('add')" />
       <scroll-picker :options="pickerList" v-model="pickerAngle"></scroll-picker>
       <img src="../../assets/images/excavator/zoomOut.png" class="add reduce" @click="pickerClick('sub')" />
@@ -245,6 +251,24 @@
         >
           {{ angle }}
         </span>
+      </div>
+    </div> -->
+
+    <div class="box">
+      <div class="angle-box">
+        <span
+          :class="{ angle: true, active: index == angleActiveIndex }"
+          v-for="(angle, index) in angleList"
+          :key="index"
+          @click="angleClick(index)"
+        >
+          {{ angle }}
+        </span>
+      </div>
+      <div class="picker-box">
+        <img src="../../assets/images/excavator/add.png" class="add" @click="pickerClick('add')" />
+        <scroll-picker :options="pickerList" v-model="pickerAngle"></scroll-picker>
+        <img src="../../assets/images/excavator/zoomOut.png" class="reduce" @click="pickerClick('sub')" />
       </div>
     </div>
   </div>

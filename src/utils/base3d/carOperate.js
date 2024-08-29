@@ -2,7 +2,7 @@
  * @Author: 徐海瑞
  * @Date: 2023-03-08 14:17:33
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2024-08-23 10:21:29
+ * @Last Modified time: 2024-08-28 17:57:28
  *
  * 车辆模型相关操作
  *
@@ -182,39 +182,36 @@ function setAroundCar(data = []) {
 }
 //更新车辆信息
 function updateCar() {
-  if (this.carModel) {
-    this.updateNum++;
-    if (this.updateNum > 3) {
-      if ('lon' in this.carPosition) {
-        this.carPosition.x = parseFloat(this.carPosition.lon);
-        this.carPosition.y = parseFloat(this.carPosition.lat);
-        let pos = window.flatModel.convertLatLonToWorldPos(this.carPosition);
-        if (!this.position) {
-          this.controls2.object.position.set(pos.x, pos.y - 50, 70);
-          this.controls2.update(new THREE.Vector3(pos.x, pos.y, 0));
-        }
-        let heading = parseFloat(this.carPosition.heading) - this.heading;
-        this.heading = parseFloat(this.carPosition.heading);
-        this.mapGroup.position.set(-pos.x, -pos.y, 0);
-        this.boxGroup.position.set(pos.x, pos.y, 0);
-        if (this.mode == 0) {
-          if (heading != 0) this.carModel.rotateY(THREE.MathUtils.degToRad(-heading));
-        } else {
-          if (heading != 0) {
-            if (this.carGroup.getObjectByName('noEntry')) {
-              this.carGroup.getObjectByName('noEntry').rotateZ(THREE.MathUtils.degToRad(heading));
-              this.NoEntryZone('noEntry');
-            }
-            this.boxGroup.rotateZ(THREE.MathUtils.degToRad(heading));
-          }
-        }
-        this.carGroup.position.set(pos.x, pos.y, 0);
-        this.setGridLines();
-      }
-      this.updateNum = 0;
-      this.trailnum++;
+  if (!this.carModel) return;
+  this.updateNum++;
+  if (this.updateNum <= 3) return;
+  if ('lon' in this.carPosition) {
+    this.carPosition.x = parseFloat(this.carPosition.lon);
+    this.carPosition.y = parseFloat(this.carPosition.lat);
+    let pos = window.flatModel.convertLatLonToWorldPos(this.carPosition);
+    if (!this.position) {
+      this.controls2.object.position.set(pos.x, pos.y - 50, 70);
+      this.controls2.update(new THREE.Vector3(pos.x, pos.y, 0));
     }
+    let heading = parseFloat(this.carPosition.heading) - this.heading;
+    this.heading = parseFloat(this.carPosition.heading);
+    this.mapGroup.position.set(-pos.x, -pos.y, 0);
+    this.boxGroup.position.set(pos.x, pos.y, 0);
+    if (this.mode == 0) {
+      if (heading != 0) this.carModel.rotateY(THREE.MathUtils.degToRad(-heading));
+    } else {
+      if (heading != 0) {
+        if (this.carGroup.getObjectByName('noEntry')) {
+          this.carGroup.getObjectByName('noEntry').rotateZ(THREE.MathUtils.degToRad(heading));
+          this.NoEntryZone('noEntry');
+        }
+        this.boxGroup.rotateZ(THREE.MathUtils.degToRad(heading));
+      }
+    }
+    this.carGroup.position.set(pos.x, pos.y, 0);
+    this.setGridLines();
   }
+  this.updateNum = 0;
 }
 
 // 清理并释放组及其子对象所占用的资源

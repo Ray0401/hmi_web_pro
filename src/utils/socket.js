@@ -6,6 +6,7 @@ class websocketUtil {
     // if (websocketUtil.instance) {
     //   return websocketUtil.instance;
     // }
+    // websocketUtil.instance = this;
 
     this.is_open_socket = false; //避免重复连接
     this.url = url; //地址
@@ -17,12 +18,10 @@ class websocketUtil {
     this.timer = null;
     this.socketTask = null;
     this.messageHandlers = [];
-    // websocketUtil.instance = this;
 
     try {
       this.connectSocketInit();
     } catch (e) {
-      console.log('catch');
       this.is_open_socket = false;
       this.reconnect();
     }
@@ -30,6 +29,7 @@ class websocketUtil {
 
   // 进入这个页面的时候创建websocket连接【整个页面随时使用】
   connectSocketInit() {
+    // this.log('---- connect websocket ----');
     this.socketTask = new WebSocket(this.url);
     this.socketTask.onopen = this.onopen.bind(this);
     this.socketTask.onmessage = this.onmessage.bind(this);
@@ -38,8 +38,8 @@ class websocketUtil {
   }
 
   onopen() {
-    console.log('WebSocket连接正常！');
-    store.commit('setWsSuccessTimestamp', +dayjs());
+    this.log('---- open websocket ----', '#228B22');
+    // store.commit('setWsSuccessTimestamp', +dayjs());
     this.reconnectNum = 0;
     clearTimeout(this.timer);
     clearTimeout(this.reconnectTimeOut);
@@ -50,8 +50,8 @@ class websocketUtil {
   }
 
   onclose() {
+    this.log('---- close websocket ----');
     clearTimeout(this.timer);
-    console.log('已经被关闭了');
     this.is_open_socket = false;
     this.reconnect();
   }
@@ -86,7 +86,7 @@ class websocketUtil {
   }
   //重新连接
   reconnect() {
-    console.log('reconnect');
+    this.log('---- reconnect websocket ----');
     // console.log(this.socketTask);
     this.socketTask?.close();
     this.socketTask = null;
@@ -107,6 +107,15 @@ class websocketUtil {
         }, 2000);
       }
     }, 100);
+  }
+
+  log(text, color = '#ff4d4f') {
+    // if (import.meta.env.MODE === 'production') return;
+
+    console.log(
+      `%c ${text}`,
+      `background:${color};border:1px solid ${color}; padding: 1px; border-radius: 2px 0 0 2px; color: #fff;`
+    );
   }
 }
 

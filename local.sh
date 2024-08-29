@@ -16,6 +16,6 @@ yarn build
 # 压缩文件夹
 zip_name=$(date +%Y%m%d)
 cd ./dist/build
-zip  -r hmi-$zip_name.zip hmi
+zip  -r hmi-pro-$zip_name.zip hmi
 rm -rf hmi
-echo "生成 hmi-$zip_name.zip"
+echo "生成 hmi-pro-$zip_name.zip"

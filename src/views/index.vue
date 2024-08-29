@@ -98,7 +98,6 @@
       showModal.value = true;
     });
     $bus.$on('openSocket', () => {
-      console.log('------ openSocket ------');
       if (showNum.value == 0) {
         showNum.value = 1;
         init();

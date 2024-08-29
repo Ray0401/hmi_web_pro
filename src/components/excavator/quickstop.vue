@@ -1,3 +1,55 @@
+<style lang="scss" scoped>
+  .quick-stop {
+    // position: absolute;
+    // top: 55px;
+    // right: 20px;
+    position: fixed;
+    top: 55px;
+    right: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .output-btn {
+    display: flex;
+    .chanliangtongji {
+      position: relative;
+      .tips {
+        width: 15px;
+        height: 15px;
+        background: #d91a1a;
+        border-radius: 50%;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 1;
+      }
+    }
+  }
+  .stopCar-event {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+  .stopCar,
+  .output,
+  .settingBtn {
+    width: 90px;
+    height: 90px;
+  }
+  .follow {
+    width: 80px;
+    height: 80px;
+    margin-left: 15px;
+  }
+
+  .preview {
+    width: 80px;
+    height: 80px;
+    margin-right: 15px;
+  }
+</style>
+
 <template>
   <div class="quick-stop">
     <!-- <div class="stop" v-if="!givePointflag">
@@ -258,55 +310,3 @@
     },
   };
 </script>
-
-<style lang="scss" scoped>
-  .quick-stop {
-    // position: absolute;
-    // top: 55px;
-    // right: 20px;
-    position: fixed;
-    top: 55px;
-    right: 0px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-  }
-
-  .output-btn {
-    display: flex;
-    .chanliangtongji {
-      position: relative;
-      .tips {
-        width: 15px;
-        height: 15px;
-        background: #d91a1a;
-        border-radius: 50%;
-        position: absolute;
-        right: 0;
-        top: 0;
-        z-index: 1;
-      }
-    }
-  }
-  .stopCar-event {
-    opacity: 0.7;
-    pointer-events: none;
-  }
-  .stopCar,
-  .output,
-  .settingBtn {
-    width: 90px;
-    height: 90px;
-  }
-  .follow {
-    width: 80px;
-    height: 80px;
-    margin-left: 15px;
-  }
-
-  .preview {
-    width: 80px;
-    height: 80px;
-    margin-right: 15px;
-  }
-</style>

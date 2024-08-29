@@ -2,7 +2,7 @@
  * @Author: 徐海瑞
  * @Date: 2022-11-15 14:02:16
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2024-05-28 15:21:32
+ * @Last Modified time: 2024-08-29 15:18:50
  *
  * 挖机相关store
  */

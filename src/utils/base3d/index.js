@@ -2,7 +2,7 @@
  * @Author: 徐海瑞
  * @Date: 2023-03-08 14:17:56
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2024-07-17 10:17:46
+ * @Last Modified time: 2024-08-29 13:45:50
  *
  * three主文件
  *
@@ -11,7 +11,7 @@ import Vue from 'vue';
 import store from '@/store';
 
 import * as THREE from 'three';
-import { initOn } from './uni-on';
+import { initOn } from './oberserve';
 import * as initScene from './initScene';
 import * as addGroup from './addGroup';
 import * as render from './render';
@@ -19,9 +19,11 @@ import * as setGroup from './setGroup';
 import * as carOperate from './carOperate';
 import * as sceneEvent from './sceneEvent';
 import { getTransformedVertices, getAssetsFile } from '../utils';
+// import Stats from 'three/examples/jsm/libs/stats.module.js';
 
 class Base3d {
   constructor(selector) {
+    // this.stats = new Stats();
     this.container = document.querySelector(selector);
     this.camera;
     this.camera2;
@@ -40,7 +42,6 @@ class Base3d {
     // this.deg = 0;
     this.updateNum = 0;
     this.tasktrail;
-    this.trailnum = 0;
     this.heading = 0;
     this.carPosition = {};
     this.mode = 0; //区分第一/第三状态
