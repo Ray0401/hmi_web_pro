@@ -643,6 +643,7 @@
         this.$emit('setNoEntryAreaStatus', { data: data });
       },
       confirm() {
+        this.clickItemId = null;
         this.showModal = false;
         // 就绪
         if (this.messageType == 7) {
@@ -664,6 +665,7 @@
         }
       },
       cancel() {
+        this.clickItemId = null;
         this.showModal = false;
       },
       listbtn(item) {

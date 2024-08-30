@@ -128,6 +128,12 @@ export const EXCAVATOR_SOCKET_MESSAGE = that => {
     CurrentMaterial: data => {
       that.headerListData.oretext = data.materialNum;
     },
+    // 运营状态结果
+    operationStatusResult: data => {
+      console.log('data', data.data);
+      that.$toast(data.data);
+      that.$store.commit('setMessageList', data.data);
+    },
     // 获取铲窝是否自动
     ExcavatorMode: data => {},
     // 不可驶入区域配置项
