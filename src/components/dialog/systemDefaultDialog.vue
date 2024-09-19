@@ -31,6 +31,8 @@ close 关闭按钮
 </template>
 
 <script>
+  import { getAssetsFile } from '@/utils/utils';
+
   export default {
     name: 'failureDegree',
     props: {
@@ -50,15 +52,15 @@ close 关闭按钮
     data() {
       return {
         degreedata1: {
-          icon: '/assets/images/alarm1.png',
+          icon: getAssetsFile('images/alarm1.png'),
           text: '系统故障请注意',
         },
         degreedata2: {
-          icon: '/assets/images/alarm2.png',
+          icon: getAssetsFile('images/alarm2.png'),
           text: '系统故障请注意',
         },
         degreedata3: {
-          icon: '/assets/images/alarm3.png',
+          icon: getAssetsFile('images/alarm3.png'),
           text: '系统故障，请求人工接管',
         },
       };

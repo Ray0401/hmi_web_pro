@@ -116,6 +116,7 @@
   import ContinueDialog from '@/components/mineCard/continueDialog.vue';
   import SensorFooterDialog from '@/components/currencyTerminal/footerDialog.vue';
   import LeftPopup from '@/components/currencyTerminal/leftPopup.vue';
+  import { getAssetsFile } from '@/utils/utils';
   export default {
     components: {
       Scene,
@@ -159,7 +160,7 @@
           carindex: 0, //
           area: '',
           option: '装载',
-          materialicon: '/assets/images/material.png',
+          materialicon: getAssetsFile('images/material.png'),
           oretext: '',
           state: 4,
           stateText: '',
