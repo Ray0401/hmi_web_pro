@@ -84,7 +84,7 @@
 
   const confirm = () => {
     let img = new Image();
-    img.src = `http://192.168.20.20/assets/images/loadlogo.png?time=${new Date().getTime()}`;
+    img.src = `${window.location.origin}/loadlogo.png?time=${new Date().getTime()}`;
     img.onload = img => {
       window.location.reload();
       showModal.value = false;
@@ -114,11 +114,14 @@
 
     $bus.$on('websocketMessage', data => {
       if (data.type == 'VehicleType') {
+        const vehicleTerminal = matchVehicleTerminal(data.vehicleNo);
         showModal.value = false;
-        terminalType.value = matchVehicleTerminal(data.vehicleNo);
-        data['terminalType'] = terminalType.value;
+        data['terminalType'] = vehicleTerminal;
         store.commit('setCarInfo', data);
         store.commit('setVehicleData', data);
+        setTimeout(() => {
+          terminalType.value = vehicleTerminal;
+        }, 500);
       }
     });
   });

@@ -118,7 +118,7 @@
 </style>
 
 <template>
-  <work-drawer direction="right" :visible="visible">
+  <work-drawer direction="right" :visible="visible" @closeDrawer="closeDrawer">
     <div class="basic-info m-border">
       <div class="row">
         <span class="label">排土块名称</span>
@@ -130,13 +130,14 @@
       </div>
       <div class="row">
         <span class="label">排土块控制</span>
-        <!-- <toggle-button
-          style="width: 70px; height: 36px"
+        <toggle-button
+          :width="70"
+          :height="35"
           color="#FF5900"
           :value="detailData.basicInfo.status != 2"
           @change="switchChange"
           :disabled="switchDisabled"
-        /> -->
+        />
         <span class="warning" v-if="switchDisabled">无法开启排土块</span>
       </div>
     </div>
@@ -175,7 +176,7 @@
   import { SOCKET_TYPE } from '@/constant/index';
   import { useStore } from '@/hooks/useStore';
   const store = useStore();
-  const $emit = defineEmits(['updateSoilBlockData']);
+  const $emit = defineEmits(['updateSoilBlockData', 'closeDrawer']);
   const props = defineProps({
     visible: {
       type: Boolean,
@@ -222,5 +223,9 @@
       dumpNum: props.detailData.basicInfo.soilBlockNum,
       status: value ? '1' : '2', // 1开 2关
     });
+  };
+
+  const closeDrawer = () => {
+    $emit('closeDrawer');
   };
 </script>

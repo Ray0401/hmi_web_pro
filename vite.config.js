@@ -4,6 +4,7 @@ import path from 'path';
 import replace from '@rollup/plugin-replace'; // 替换字符串
 import postCssPxToRem from 'postcss-pxtorem';
 import { isWsMock } from './src/constant';
+import viteCompression from 'vite-plugin-compression';
 
 export default defineConfig(({ mode }) => {
   const isDev = mode == 'development';
@@ -13,6 +14,14 @@ export default defineConfig(({ mode }) => {
       replace({
         [isWsMock]: isDev ? isWsMock : 'no',
         preventAssignment: true, // 添加这个选项
+      }),
+      viteCompression({
+        // 开启gizp
+        verbose: true,
+        disable: false,
+        threshold: 10240,
+        algorithm: 'gzip',
+        ext: '.gz',
       }),
     ],
     assetsInclude: ['**/*.obj', '**/*.mtl'],

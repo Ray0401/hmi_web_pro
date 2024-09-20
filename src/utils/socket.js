@@ -86,7 +86,7 @@ class websocketUtil {
   }
   //重新连接
   reconnect() {
-    this.log('---- reconnect websocket ----');
+    this.log('---- reconnect websocket ----', '#FF5900');
     // console.log(this.socketTask);
     this.socketTask?.close();
     this.socketTask = null;

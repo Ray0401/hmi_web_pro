@@ -2,7 +2,7 @@
  * @Author: 徐海瑞
  * @Date: 2023-03-08 14:17:33
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2024-09-19 14:24:10
+ * @Last Modified time: 2024-09-20 10:33:10
  *
  * 车辆模型相关操作
  *
@@ -184,7 +184,7 @@ function setAroundCar(data = []) {
 function updateCar() {
   if (!this.carModel) return;
   this.updateNum++;
-  if (this.updateNum <= 3) return;
+  if (this.updateNum <= 5) return;
   if ('lon' in this.carPosition) {
     this.carPosition.x = parseFloat(this.carPosition.lon);
     this.carPosition.y = parseFloat(this.carPosition.lat);

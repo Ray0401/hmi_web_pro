@@ -13,9 +13,10 @@ echo export const BUILD_DATE="'$build_date';" >>  buildId.js
 # 打包
 yarn build
 
-# 压缩文件夹
-zip_name=$(date +%Y%m%d)
+# 压缩
 cd ./dist/build
+# 定义压缩文件夹名
+zip_name=$(date +%Y%m%d)
 zip  -r hmi-pro-$zip_name.zip hmi
 rm -rf hmi
 echo "生成 hmi-pro-$zip_name.zip"

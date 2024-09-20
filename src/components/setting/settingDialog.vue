@@ -461,6 +461,9 @@
             <div class="setting-btn" @click="reloadFn">
               <span>刷新</span>
             </div>
+            <div class="setting-btn" @click="setFullScreen">
+              <span>{{ fullscreenText }}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -626,6 +629,7 @@
         newVersionFlag: false,
         checkVersionFlag: false,
         gridLine: false,
+        fullscreenText: '全屏',
       };
     },
     computed: {},
@@ -644,6 +648,17 @@
     },
 
     methods: {
+      setFullScreen() {
+        if (document.fullscreenElement) {
+          document.exitFullscreen();
+          this.fullscreenText = '全屏';
+        } else {
+          document.documentElement.requestFullscreen();
+          this.fullscreenText = '退出全屏';
+        }
+
+        // 退出全屏
+      },
       reloadFn() {
         window.location.reload();
       },
