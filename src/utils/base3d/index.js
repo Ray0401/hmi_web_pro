@@ -2,7 +2,7 @@
  * @Author: 徐海瑞
  * @Date: 2023-03-08 14:17:56
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2024-08-29 13:45:50
+ * @Last Modified time: 2024-09-23 17:17:20
  *
  * three主文件
  *
@@ -94,6 +94,12 @@ class Base3d {
     this.movePointParams = {}; // 移动停靠点的数据参数
     this.collisionDetectionList = []; //碰撞检测列表
     this.originZ = 0; //手动指点旋转原始值;
+
+    // 单例模式
+    if (Base3d.instance) {
+      return Base3d.instance;
+    }
+    Base3d.instance = this;
   }
 
   // 添加网格线
@@ -112,25 +118,6 @@ class Base3d {
   }
 
   setLanes(lanejson, type, bool) {
-    // 如果已有线段，进行增量更新
-    // if(lanejson[0].list?.length) {
-    //   let types = type;
-    //   if(type == 'obstacle' && lanejson[0].last) {
-    //     types = lanejson[0].lane_name;
-    //   } else {
-    //     return false;
-    //   }
-    //   let line = this.scene.getObjectByName(types);
-    //   if((['boundary', 'soil'].includes(type) || type.includes('obstacle')) && line) {
-    //     let list = line.geometry.positions;
-    //     let item = lanejson[0].list.at(-1);
-    //     let xyz = window.flatModel.convertLatLonToWorldPos(new THREE.Vector3(item.lon, item.lat, 0.02));
-    //     xyz.z = 0.02;
-    //     list.push(...xyz);
-    //     line.geometry.points = new Float32Array(list);
-    //     return false;
-    //   }
-    // }
     this.lanes.init(lanejson, type, this.checkPointStopNum);
     if (type == 'taskLane' && !bool) {
       let list = lanejson[0];

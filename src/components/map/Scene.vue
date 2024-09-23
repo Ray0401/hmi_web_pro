@@ -185,7 +185,7 @@
         // 只有第一次绘制模型
         if (bool) {
           _base3d.setPerspectiveCamera();
-          _base3d.loadCar2(this.vehicleData.vehicleNo);
+          _base3d.loadCar(this.vehicleData.vehicleNo);
         }
       },
       // 车道封闭区域
