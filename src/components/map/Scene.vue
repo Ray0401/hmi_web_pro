@@ -121,9 +121,8 @@
     },
     mounted() {
       localStorage.removeItem('workareaTaskInfo');
-      this.getData();
       _base3d = new Base3d('#map-scene');
-      _base3d.setAroundCar([]);
+      this.getData();
     },
     methods: {
       changeStatus(value) {

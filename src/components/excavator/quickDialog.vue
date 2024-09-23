@@ -79,7 +79,7 @@
 </template>
 
 <script setup>
-  import { ref, defineProps, defineEmits, computed, watch } from 'vue';
+  import { computed, watch } from 'vue';
   import { sendMsgToBackend, sendSocket } from '@/utils/utils';
   import { useStore } from '@/hooks/useStore';
 

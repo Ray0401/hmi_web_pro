@@ -36,7 +36,7 @@ const createLabel = (data, name) => {
   div.innerHTML = name;
   div.style.color = 'white';
   div.style.marginTop = '-10px';
-  div.style.fontSize = '.3rem';
+  div.style.fontSize = '16px';
   textCache[name] = elementLabel;
   return elementLabel;
 };

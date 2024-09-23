@@ -6,7 +6,7 @@
 </template>
 
 <script setup>
-  import { ref, defineProps, watch, onMounted, nextTick } from 'vue';
+  import { ref, watch, onMounted, nextTick } from 'vue';
   let props = defineProps({
     text: {
       type: String,

@@ -2,7 +2,7 @@
  * @Author: 徐海瑞
  * @Date: 2023-03-08 14:17:33
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2024-09-20 10:33:10
+ * @Last Modified time: 2024-09-23 14:55:57
  *
  * 车辆模型相关操作
  *
@@ -47,7 +47,7 @@ function loadCar2(type = 100, data) {
           obj.renderOrder = 2;
           const earthDiv = document.createElement('div');
           earthDiv.style.color = '#ffffff';
-          earthDiv.style.fontSize = '.5rem';
+          earthDiv.style.fontSize = '18px';
           earthDiv.style.position = 'absolute';
           earthDiv.style.top = '-20px';
           earthDiv.textContent = this.carName ?? model;
@@ -101,21 +101,6 @@ function loadCar2(type = 100, data) {
       );
     });
   });
-}
-//创建标签方法
-function createLableObj(text, vector) {
-  let labelDiv = document.createElement('div'); //创建div容器
-  labelDiv.className = 'laber_name';
-  // labelDiv.textContent = text;
-  labelDiv.innerHTML = `
-            <div class='label_count'>
-                ${text}
-            </div>
-        `;
-  // 给标签设置坐标位置
-  let pointLabel = new CSS2DObject(labelDiv);
-  pointLabel.position.set(vector.x, vector.y, vector.z);
-  return pointLabel;
 }
 // 加载周边车辆
 function setAroundCar(data = []) {
@@ -239,4 +224,4 @@ function disposeGroup(group) {
   group.clear();
 }
 
-export { createLableObj, loadCar2, setAroundCar, updateCar };
+export { loadCar2, setAroundCar, updateCar };

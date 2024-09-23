@@ -134,7 +134,7 @@ class Boundary {
       let poly = polylabel([list], 1.0);
       const earthDiv = document.createElement('div');
       earthDiv.style.color = '#ffffff';
-      earthDiv.style.fontSize = '.5rem';
+      earthDiv.style.fontSize = '20px';
       earthDiv.textContent = this.name || this.id;
       const earthLabel = new CSS2DObject(earthDiv);
       earthLabel.position.set(poly[0], poly[1], 2);

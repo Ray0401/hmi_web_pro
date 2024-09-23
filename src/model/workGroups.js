@@ -2,7 +2,7 @@
  * @Author: 徐海瑞
  * @Date: 2023-01-31 10:39:33
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2023-08-30 14:43:56
+ * @Last Modified time: 2024-09-23 14:30:40
  * 绘制推土机作业区域
  *
  */
@@ -139,7 +139,7 @@ class Boundary {
     let div = elementLabel.element;
     div.innerHTML = name;
     div.style.color = 'white';
-    div.style.fontSize = '.5rem';
+    div.style.fontSize = '20px';
     textCache[name] = elementLabel;
     return elementLabel;
   }

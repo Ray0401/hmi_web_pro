@@ -2,7 +2,6 @@
   <div class="top-info-text">{{ text }}</div>
 </template>
 <script setup>
-  import { defineProps } from 'vue';
   let props = defineProps({
     text: {
       type: String,

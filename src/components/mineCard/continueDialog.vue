@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-  import { reactive, onMounted, defineEmits } from 'vue';
+  import { reactive, onMounted } from 'vue';
   import Modal from '@/components/components/modal.vue';
   import { sendSocket } from '@/utils/utils';
 

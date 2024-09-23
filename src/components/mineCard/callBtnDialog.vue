@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-  import { reactive, defineProps, defineEmits, computed } from 'vue';
+  import { reactive } from 'vue';
   import { preWarningList } from './data';
   let props = defineProps({
     preWarning: {
