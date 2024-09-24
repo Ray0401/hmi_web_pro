@@ -119,14 +119,16 @@
 
   const confirm = () => {
     if (disabled.value) return;
-    let img = new Image();
-    img.src = `${window.location.origin}/loadlogo.png?time=${new Date().getTime()}`;
-    img.onload = img => {
-      showModal.value = false;
-      window.location.reload();
-    };
-    img.onerror = err => {
-      message.value = '网关错误，请稍后重试';
-    };
+    window.location.reload();
+
+    // let img = new Image();
+    // img.src = `${window.location.origin}/loadlogo.png?time=${new Date().getTime()}`;
+    // img.onload = img => {
+    //   showModal.value = false;
+    //   window.location.reload();
+    // };
+    // img.onerror = err => {
+    //   message.value = '网关错误，请稍后重试';
+    // };
   };
 </script>

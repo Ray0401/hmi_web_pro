@@ -118,13 +118,12 @@
       this.$bus.$on('showPreviewData', () => {
         this.loadAreaPreviewData();
       });
-
-      this.getData();
     },
 
     mounted() {
       localStorage.removeItem('workareaTaskInfo');
       window._base3d = new Base3d('#map-scene');
+      this.getData();
     },
     methods: {
       changeStatus(value) {
