@@ -3,7 +3,6 @@
     position: relative;
     width: 100vw;
     height: 100vh;
-    // background-color: #000;
     overflow: hidden;
 
     > .content {
@@ -86,8 +85,8 @@
     let img = new Image();
     img.src = `${window.location.origin}/loadlogo.png?time=${new Date().getTime()}`;
     img.onload = img => {
-      window.location.reload();
       showModal.value = false;
+      window.location.reload();
     };
     img.onerror = err => {
       message.value = '网关错误，请稍后重试';

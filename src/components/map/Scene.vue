@@ -42,13 +42,13 @@
   <div class="hmi-map">
     <div class="scene" id="map-scene"></div>
     <div class="zoom-box">
-      <img
+      <!-- <img
         v-if="v2vWarningShow"
         src="../../assets/images/v2vShow.png"
         class="img v2v-show"
         @click="changeStatus(false)"
       />
-      <img v-else src="../../assets/images/v2vHide.png" class="img v2v-hide" @click="changeStatus(true)" />
+      <img v-else src="../../assets/images/v2vHide.png" class="img v2v-hide" @click="changeStatus(true)" /> -->
 
       <img src="../../assets/images/position.png" class="position" @click="setPosition" />
       <img :src="navigationImg" class="mode" @click="setMode" />
@@ -65,7 +65,7 @@
   import { SCENE_SOCKET_MESSAGE } from './socketMessage';
   import { MINE_CARD, ADOPT, SOIL } from '@/constant/index';
   import { getAssetsFile, sendMsgToBackend } from '@/utils/utils';
-  let _base3d;
+  window._base3d = null;
 
   export default {
     props: ['collectList', 'collectFileListPoint'],
@@ -111,18 +111,20 @@
       this.$bus.$on('maptaskInfo1', () => this.mapTaskInfo('ADOPT'));
       this.$bus.$on('maptaskInfo', () => this.mapTaskInfo());
       this.$bus.$on('deleteSensorCollect', () => {
-        _base3d.setLanes([], 'reviewSensorCollectLeft');
-        _base3d.setLanes([], 'reviewSensorCollectRight');
+        window._base3d.setLanes([], 'reviewSensorCollectLeft');
+        window._base3d.setLanes([], 'reviewSensorCollectRight');
       });
       // 展示预览数据
       this.$bus.$on('showPreviewData', () => {
         this.loadAreaPreviewData();
       });
+
+      this.getData();
     },
+
     mounted() {
       localStorage.removeItem('workareaTaskInfo');
-      _base3d = new Base3d('#map-scene');
-      this.getData();
+      window._base3d = new Base3d('#map-scene');
     },
     methods: {
       changeStatus(value) {
@@ -138,10 +140,10 @@
         this.$bus.$emit('setMode', { data: mode });
       },
       add() {
-        _base3d.setCamera2Y(-100);
+        window._base3d.setCamera2Y(-100);
       },
       reduce() {
-        _base3d.setCamera2Y(100);
+        window._base3d.setCamera2Y(100);
       },
       getData() {
         this.$nextTick(() => {
@@ -175,73 +177,73 @@
       // 获取装载区预览数据
       async loadAreaPreviewData() {
         const res = (await mapApi.getPreviewData()) || {};
-        res.data && _base3d.setBoudarys([{ gps_list: res.data }], 'previewLoadArea');
+        res.data && window._base3d.setBoudarys([{ gps_list: res.data }], 'previewLoadArea');
       },
 
       // 车道路径
       async roadLane(bool) {
         const res = (await mapApi.getMapInfoLane()) ?? [];
-        res?.data && _base3d.setLanes(res.data, 'mapline');
+        res?.data && window._base3d.setLanes(res.data, 'mapline');
         // 只有第一次绘制模型
         if (bool) {
-          _base3d.setPerspectiveCamera();
-          _base3d.loadCar(this.vehicleData.vehicleNo);
+          window._base3d.setPerspectiveCamera();
+          window._base3d.loadCar(this.vehicleData.vehicleNo);
         }
       },
       // 车道封闭区域
       async roadBoundary() {
         const res = (await mapApi.getMapInfoRoadBoundary()) || [];
-        res?.data && _base3d.setRoads(res.data);
+        res?.data && window._base3d.setRoads(res.data);
 
         this.boundary();
       },
       // 车道中心线
       async roadCenter() {
         const res = (await mapApi.getMapInfoRoadCenterline()) || [];
-        res?.data && _base3d.setLanes(res.data, 'RoadCenter');
+        res?.data && window._base3d.setLanes(res.data, 'RoadCenter');
       },
       // 卸载区数据
       async rgnUnload() {
         const res = (await mapApi.getMapInfoRgnUnload()) || [];
-        res?.data && _base3d.setBoudarys(res.data, 'unloadArea');
+        res?.data && window._base3d.setBoudarys(res.data, 'unloadArea');
       },
       // 装载区数据
       async rgnLoad() {
-        _base3d.setBoudarys([], 'previewLoadArea');
+        window._base3d.setBoudarys([], 'previewLoadArea');
         const res = (await mapApi.getMapInfoRgnLoad()) || [];
         // 电铲需显示区域名称
         if (this.vehicleData.terminalType == ADOPT) this.$bus.$emit('rgnLoadData', res.data);
         if (res?.data) {
-          _base3d.setBoudarys(res.data, 'loadArea');
-          // _base3d.setLanes(res.data, 'loadAreaLine');
+          window._base3d.setBoudarys(res.data, 'loadArea');
+          // window._base3d.setLanes(res.data, 'loadAreaLine');
         }
       },
       // 辅助作业区
       async rgnAuxiliary() {
         const res = (await mapApi.getMapInfoRgnAuxiliary()) || [];
-        res?.data && _base3d.setBoudarys(res.data, 'auxiliaryArea');
+        res?.data && window._base3d.setBoudarys(res.data, 'auxiliaryArea');
       },
       // 路口数据
       async rgnJunction() {
         const res = (await mapApi.getMapInfoJunction()) || [];
-        res?.data && _base3d.setBoudarys(res.data, 'junctionArea');
+        res?.data && window._base3d.setBoudarys(res.data, 'junctionArea');
       },
       // 隔离带数据
       async roadIsolation() {
         const res = (await mapApi.getMapInfoRoadIsolation()) || [];
-        res?.data && _base3d.setBoudarys(res.data, 'isolationArea');
+        res?.data && window._base3d.setBoudarys(res.data, 'isolationArea');
       },
       // 边界数据
       async boundary(bool) {
         if (![ADOPT, SOIL].includes(this.vehicleData.terminalType)) return;
         const res = (await mapApi.getBoundaryMapInfo()) || {};
-        if (this.vehicleData.terminalType == SOIL) _base3d.setWorkGroups(res.group_list); //推土机终端中的停靠组(排土块)
+        if (this.vehicleData.terminalType == SOIL) window._base3d.setWorkGroups(res.group_list); //推土机终端中的停靠组(排土块)
         if (res?.dock_point_list?.length) {
           this.pointList = res.dock_point_list || [];
           this.setMapPoint(bool);
         }
         if (res?.boud_list) {
-          _base3d.setWorkBouds(res.boud_list);
+          window._base3d.setWorkBouds(res.boud_list);
           this.$emit('boudName', res?.boud_list?.[0].boundary_name);
         }
       },
@@ -250,15 +252,18 @@
         if (!type) {
           const res = await mapApi.getMapTaskInfo();
           // 锚点
-          res?.lat && _base3d.setPoints({ lat: res.lat, lon: res.lon, heading: res.heading, index: 0 }, 'maodian');
+          res?.lat &&
+            window._base3d.setPoints({ lat: res.lat, lon: res.lon, heading: res.heading, index: 0 }, 'maodian');
           // 路径
-          res?.data && _base3d.setLanes([res.data], this.vehicleData.terminalType == ADOPT ? 'exTaskLane' : 'taskLane');
+          res?.data &&
+            window._base3d.setLanes([res.data], this.vehicleData.terminalType == ADOPT ? 'exTaskLane' : 'taskLane');
         } else {
           const res = await mapApi.getMapTaskInfo1();
           // 锚点
-          res?.lat && _base3d.setPoints({ lat: res.lat, lon: res.lon, heading: res.heading, index: 1 }, 'maodian');
+          res?.lat &&
+            window._base3d.setPoints({ lat: res.lat, lon: res.lon, heading: res.heading, index: 1 }, 'maodian');
           // 路径
-          res?.data && _base3d.setLanes([res.data], 'exTaskLane1');
+          res?.data && window._base3d.setLanes([res.data], 'exTaskLane1');
         }
       },
       // 作业区内的矿卡任务路径
@@ -280,7 +285,7 @@
         try {
           // 将所有路径信息保存起来
           // localStorage.setItem('workareaTaskInfo', JSON.stringify(groups));
-          _base3d.workareaTaskInfo = groups;
+          window._base3d.workareaTaskInfo = groups;
         } catch (e) {
           if (e instanceof DOMException && e.name === 'QuotaExceededError') {
             // 处理存储达到上限的情况
@@ -295,7 +300,7 @@
       // 动态地图全量更新
       async stringline() {
         const res = (await mapApi.getMapInfoStringlineData()) || [];
-        _base3d.setLanes(res.data, 'obstaclesLine');
+        window._base3d.setLanes(res.data, 'obstaclesLine');
       },
       // 动态地图增量更新
       async addStringline() {
@@ -324,7 +329,7 @@
             }
             this.$bus.$emit('ComparisonTable', info);
           }
-          _base3d.setPoints(list); //  推土机终端中的卡车停靠点(排土点)
+          window._base3d.setPoints(list); //  推土机终端中的卡车停靠点(排土点)
           return;
         }
 
@@ -345,12 +350,12 @@
             sendMsgToBackend('停靠位更新已完成');
           }
           // console.log('list', list);
-          _base3d.setPoints(list);
+          window._base3d.setPoints(list);
         }
       },
       getElectricFence() {
         mapApi.getElectricFence().then(res => {
-          if (res.data) _base3d.setBoudarys(res.data, 'electricFence');
+          if (res.data) window._base3d.setBoudarys(res.data, 'electricFence');
         });
       },
       getMapcuReview() {
@@ -359,8 +364,8 @@
             left_list: res.left_boundary || [],
             right_list: res.right_boundary || [],
           };
-          if (data.left_list) _base3d.setLanes([data.left_list], 'reviewSensorCollectLeft');
-          if (data.right_list) _base3d.setLanes([data.right_list], 'reviewSensorCollectRight');
+          if (data.left_list) window._base3d.setLanes([data.left_list], 'reviewSensorCollectLeft');
+          if (data.right_list) window._base3d.setLanes([data.right_list], 'reviewSensorCollectRight');
         });
       },
       collectFun(val) {
@@ -393,23 +398,23 @@
           if (target.length) {
             target.forEach((item, index) => {
               // last 确认为最后一个
-              _base3d.setLanes(
+              window._base3d.setLanes(
                 [{ lane_name: `obstacle_${index}`, list: item, last: index == target.length - 1 }],
                 laneType
               );
             });
           } else {
-            _base3d.setLanes([{ lane_name: '', list: val }], 'bulldozerCollect');
+            window._base3d.setLanes([{ lane_name: '', list: val }], 'bulldozerCollect');
           }
         } else {
-          _base3d.setLanes([{ lane_name: '', list: val }], laneType);
+          window._base3d.setLanes([{ lane_name: '', list: val }], laneType);
         }
       },
     },
     watch: {
       collectList: {
         handler: function (val) {
-          _base3d.setLanes([{ lane_name: '', list: val }], 'collect');
+          window._base3d.setLanes([{ lane_name: '', list: val }], 'collect');
         },
         deep: true,
       },
@@ -427,7 +432,7 @@
                 item => item !== undefined && item != this.pointItem.stop_num && item != this.pointItem.child_stop_num
               )
               .map(item => `point_${item}`);
-            _base3d.collisionDetectionList = _val;
+            window._base3d.collisionDetectionList = _val;
             setTimeout(() => {
               this.setMapPoint();
             }, 100);
@@ -440,13 +445,13 @@
           let _val = this.excavatorType
             .filter(item => item !== undefined && item != val.stop_num && item != val.child_stop_num)
             .map(item => `point_${item}`);
-          _base3d.collisionDetectionList = _val;
+          window._base3d.collisionDetectionList = _val;
         },
         deep: true,
       },
     },
-    destroyed() {
-      // this.$bus.$off('websocketMessage');
+    beforeDestroy() {
+      window._base3d = null;
     },
   };
 </script>

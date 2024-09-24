@@ -2,7 +2,7 @@
  * @Author: 徐海瑞
  * @Date: 2023-03-08 14:17:33
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2024-09-23 17:20:29
+ * @Last Modified time: 2024-09-24 13:50:30
  *
  * 车辆模型相关操作
  *
@@ -81,7 +81,6 @@ function processLoadedObject(_this, obj, type, model, data, resolve) {
 }
 
 // 加载车辆
-
 function loadCar(type = 100, data) {
   console.log('loadCar ', type);
   let _this = this;
@@ -175,11 +174,12 @@ function setAroundCar(data = []) {
     }
   }
 }
+
 //更新车辆信息
 function updateCar() {
   if (!this.carModel) return;
   this.updateNum++;
-  if (this.updateNum <= 5) return;
+  if (this.updateNum <= 3) return;
   if ('lon' in this.carPosition) {
     this.carPosition.x = parseFloat(this.carPosition.lon);
     this.carPosition.y = parseFloat(this.carPosition.lat);

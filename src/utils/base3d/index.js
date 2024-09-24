@@ -2,7 +2,7 @@
  * @Author: 徐海瑞
  * @Date: 2023-03-08 14:17:56
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2024-09-23 17:17:20
+ * @Last Modified time: 2024-09-24 13:43:22
  *
  * three主文件
  *
@@ -24,6 +24,7 @@ import { getTransformedVertices, getAssetsFile } from '../utils';
 class Base3d {
   constructor(selector) {
     // this.stats = new Stats();
+
     this.container = document.querySelector(selector);
     this.camera;
     this.camera2;
@@ -96,10 +97,10 @@ class Base3d {
     this.originZ = 0; //手动指点旋转原始值;
 
     // 单例模式
-    if (Base3d.instance) {
-      return Base3d.instance;
-    }
-    Base3d.instance = this;
+    // if (Base3d.instance) {
+    //   return Base3d.instance;
+    // }
+    // Base3d.instance = this;
   }
 
   // 添加网格线

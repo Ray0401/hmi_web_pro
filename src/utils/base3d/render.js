@@ -2,7 +2,7 @@
  * @Author: 徐海瑞
  * @Date: 2023-03-08 14:18:35
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2024-08-28 17:25:14
+ * @Last Modified time: 2024-09-24 10:48:53
  *
  * render动画操作
  *
@@ -20,13 +20,14 @@ function onWindowResize() {
 //动画
 function render() {
   // this.stats.begin();
-  this.updateCar();
   if (this.b3dCamera) {
     this.renderer.render(this.scene, this.camera2);
     this.labelRenderer.render(this.scene, this.camera2);
   } else {
     this.renderer.render(this.scene, this.camera);
   }
+  this.updateCar();
+
   // this.stats.end();
 }
 // 开始动画
