@@ -451,6 +451,8 @@
     },
     beforeDestroy() {
       window._base3d = null;
+      window.materialsCache = null;
+      window.objectsCache = null;
     },
   };
 </script>

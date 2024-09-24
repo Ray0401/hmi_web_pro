@@ -2,7 +2,7 @@
  * @Author: 徐海瑞
  * @Date: 2023-03-08 14:17:56
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2024-09-24 13:43:22
+ * @Last Modified time: 2024-09-24 17:17:51
  *
  * three主文件
  *
@@ -19,12 +19,17 @@ import * as setGroup from './setGroup';
 import * as carOperate from './carOperate';
 import * as sceneEvent from './sceneEvent';
 import { getTransformedVertices, getAssetsFile } from '../utils';
+import CSS2DObjectHelper from './css2DObjectHelper';
 // import Stats from 'three/examples/jsm/libs/stats.module.js';
 
 class Base3d {
   constructor(selector) {
-    // this.stats = new Stats();
+    if (Base3d.instance) {
+      return Base3d.instance;
+    }
+    Base3d.instance = this;
 
+    // this.stats = new Stats();
     this.container = document.querySelector(selector);
     this.camera;
     this.camera2;
@@ -95,12 +100,7 @@ class Base3d {
     this.movePointParams = {}; // 移动停靠点的数据参数
     this.collisionDetectionList = []; //碰撞检测列表
     this.originZ = 0; //手动指点旋转原始值;
-
-    // 单例模式
-    // if (Base3d.instance) {
-    //   return Base3d.instance;
-    // }
-    // Base3d.instance = this;
+    this.CSS2DObjectHelper = new CSS2DObjectHelper(this.camera2);
   }
 
   // 添加网格线

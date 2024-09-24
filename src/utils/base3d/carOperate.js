@@ -2,7 +2,7 @@
  * @Author: 徐海瑞
  * @Date: 2023-03-08 14:17:33
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2024-09-24 15:01:33
+ * @Last Modified time: 2024-09-24 18:21:27
  *
  * 车辆模型相关操作
  *
@@ -41,7 +41,16 @@ function processLoadedObject(_this, obj, type, model, data, resolve) {
   earthDiv.textContent = _this.carName ?? model;
   const earthLabel = new CSS2DObject(earthDiv);
   earthLabel.layers.set(0);
+  // console.log('earthLabel', earthLabel);
   obj.add(earthLabel);
+
+  // const textContent = _this.carName ?? model;
+  // const cssText = `color:#fff;font-size:18px;`;
+  // const labelObject = _this.CSS2DObjectHelper.create(_this.carName, textContent, cssText);
+  // console.log('labelObject', labelObject);
+  // labelObject.layers.set(0);
+  // obj.add(labelObject);
+
   obj.rotateZ(THREE.MathUtils.degToRad(90));
   obj.rotateX(THREE.MathUtils.degToRad(90));
   if (data) {
@@ -68,8 +77,7 @@ function processLoadedObject(_this, obj, type, model, data, resolve) {
     group.rotateZ(THREE.MathUtils.degToRad(90));
     group.add(obj);
     _this.mapGroup.add(group);
-  }
-  if (!data) {
+  } else {
     _this.carModel && _this.carModel.removeFromParent();
     _this.carModel = obj;
     _this.carGroup.add(_this.carModel);
@@ -77,6 +85,7 @@ function processLoadedObject(_this, obj, type, model, data, resolve) {
     _this.carGroup.renderOrder = 1;
     earthLabel.name = 'positionCarName';
   }
+
   resolve('加载模型成功');
 }
 

@@ -3,10 +3,10 @@ import store from '@/store';
 import dayjs from 'dayjs';
 class websocketUtil {
   constructor(url, time) {
-    // if (websocketUtil.instance) {
-    //   return websocketUtil.instance;
-    // }
-    // websocketUtil.instance = this;
+    if (websocketUtil.instance) {
+      return websocketUtil.instance;
+    }
+    websocketUtil.instance = this;
 
     this.is_open_socket = false; //避免重复连接
     this.url = url; //地址
