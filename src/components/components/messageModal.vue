@@ -6,7 +6,7 @@
         <img class="load-img" src="../../assets/images/excavator/countDown.png" />
       </div>
       <div class="dialog-btn-list" v-else>
-        <button-dialog type="orange" @click="confirm">
+        <button-dialog type="orange" @click="confirm" :disabled="disabled">
           {{ confirmText || toLang('confirm') }} {{ showTime ? count : '' }}
         </button-dialog>
         <button-dialog v-if="showCancel" :type="cancelType" class="bottombutton" @click="cancel(true)">
@@ -21,6 +21,10 @@
   export default {
     name: 'messageModal',
     props: {
+      disabled: {
+        type: Boolean,
+        default: false,
+      },
       message: {
         type: String,
         default: '',

@@ -26,9 +26,10 @@
 
     <MessageModal
       v-if="showModal"
+      :disabled="disabled"
       :message="message"
       :showCancel="false"
-      :confirmText="toLang('reload')"
+      :confirmText="btnText"
       @confirm="confirm"
     />
   </div>
@@ -36,7 +37,7 @@
 
 <script setup>
   import axios from 'axios';
-  import { ref, getCurrentInstance, onBeforeMount } from 'vue';
+  import { ref, getCurrentInstance } from 'vue';
   import { useStore } from '@/hooks/useStore';
   import Load from '@/components/components/load.vue';
   import MineCard from './mineCard.vue';
@@ -51,6 +52,13 @@
   const { $bus, socket } = getCurrentInstance().proxy;
   const store = useStore();
 
+  const terminalType = ref(null);
+  const showNum = ref(0);
+  const showModal = ref(false);
+  const message = ref('网络链接不稳定');
+  const btnText = ref('自动重连中...');
+  const disabled = ref(true);
+
   //亮度
   try {
     axios.get(`http://127.0.0.1:3333?val=${store.state.brightness / 100}`);
@@ -58,10 +66,35 @@
     console.log('error', error);
   }
 
-  const terminalType = ref(null);
-  const showNum = ref(0);
-  const showModal = ref(false);
-  const message = ref('网络链接不稳定,请刷新重试');
+  $bus.$on('socketError', () => {
+    showModal.value = true;
+    message.value = '网关错误，请稍后重试';
+    btnText.value = '刷新';
+    disabled.value = false;
+  });
+  $bus.$on('closeSocket', () => {
+    showNum.value = 0;
+    showModal.value = true;
+  });
+  $bus.$on('openSocket', () => {
+    if (showNum.value == 0) {
+      showNum.value = 1;
+      init();
+    }
+  });
+
+  $bus.$on('websocketMessage', data => {
+    if (data.type == 'VehicleType') {
+      const vehicleTerminal = matchVehicleTerminal(data.vehicleNo);
+      showModal.value = false;
+      data['terminalType'] = vehicleTerminal;
+      store.commit('setCarInfo', data);
+      store.commit('setVehicleData', data);
+      setTimeout(() => {
+        terminalType.value = vehicleTerminal;
+      }, 500);
+    }
+  });
 
   const init = () => {
     store.commit('setHmiVersion', BUILD_ID);
@@ -82,6 +115,7 @@
   };
 
   const confirm = () => {
+    if (disabled.value) return;
     let img = new Image();
     img.src = `${window.location.origin}/loadlogo.png?time=${new Date().getTime()}`;
     img.onload = img => {
@@ -92,36 +126,4 @@
       message.value = '网关错误，请稍后重试';
     };
   };
-
-  onBeforeMount(() => {
-    $bus.$on('socketError', () => {
-      if (!showModal.value) {
-        showModal.value = true;
-      }
-      confirm();
-    });
-    $bus.$on('closeSocket', () => {
-      showNum.value = 0;
-      showModal.value = true;
-    });
-    $bus.$on('openSocket', () => {
-      if (showNum.value == 0) {
-        showNum.value = 1;
-        init();
-      }
-    });
-
-    $bus.$on('websocketMessage', data => {
-      if (data.type == 'VehicleType') {
-        const vehicleTerminal = matchVehicleTerminal(data.vehicleNo);
-        showModal.value = false;
-        data['terminalType'] = vehicleTerminal;
-        store.commit('setCarInfo', data);
-        store.commit('setVehicleData', data);
-        setTimeout(() => {
-          terminalType.value = vehicleTerminal;
-        }, 500);
-      }
-    });
-  });
 </script>
