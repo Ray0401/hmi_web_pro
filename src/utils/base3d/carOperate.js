@@ -2,7 +2,7 @@
  * @Author: 徐海瑞
  * @Date: 2023-03-08 14:17:33
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2024-09-24 13:50:30
+ * @Last Modified time: 2024-09-24 15:01:33
  *
  * 车辆模型相关操作
  *
@@ -82,7 +82,7 @@ function processLoadedObject(_this, obj, type, model, data, resolve) {
 
 // 加载车辆
 function loadCar(type = 100, data) {
-  console.log('loadCar ', type);
+  // console.log('loadCar ', type);
   let _this = this;
   const model = matchVehicleModel(type);
   if (!model) return;

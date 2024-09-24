@@ -90,6 +90,9 @@
       data['terminalType'] = vehicleTerminal;
       store.commit('setCarInfo', data);
       store.commit('setVehicleData', data);
+      message.value = '网络链接不稳定';
+      btnText.value = '自动重连中...';
+      disabled.value = true;
       setTimeout(() => {
         terminalType.value = vehicleTerminal;
       }, 500);
