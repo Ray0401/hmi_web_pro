@@ -2,7 +2,7 @@
  * @Author: 徐海瑞
  * @Date: 2023-03-08 14:18:35
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2024-09-24 10:48:53
+ * @Last Modified time: 2024-09-25 14:28:52
  *
  * render动画操作
  *
@@ -27,6 +27,8 @@ function render() {
     this.renderer.render(this.scene, this.camera);
   }
   this.updateCar();
+
+  // console.log('this.CSS2DWrapper', this.CSS2DWrapper);
 
   // this.stats.end();
 }

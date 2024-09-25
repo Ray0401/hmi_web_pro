@@ -2,7 +2,7 @@
  * @Author: 徐海瑞
  * @Date: 2023-01-31 10:24:49
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2024-06-05 10:21:41
+ * @Last Modified time: 2024-09-25 15:45:05
  *
  * 绘制作业区域边界
  *
@@ -11,7 +11,6 @@ import * as THREE from 'three';
 import earcut from 'earcut';
 import { CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer';
 import polylabel from 'polylabel';
-import { destroyMesh } from '@/utils/utils';
 let boundaryInfo = {
   workArea: {
     materialStyle: {
@@ -134,7 +133,7 @@ class Boundary {
       let poly = polylabel([list], 1.0);
       const earthDiv = document.createElement('div');
       earthDiv.style.color = '#ffffff';
-      earthDiv.style.fontSize = '20px';
+      earthDiv.style.fontSize = '16px';
       earthDiv.textContent = this.name || this.id;
       const earthLabel = new CSS2DObject(earthDiv);
       earthLabel.position.set(poly[0], poly[1], 2);

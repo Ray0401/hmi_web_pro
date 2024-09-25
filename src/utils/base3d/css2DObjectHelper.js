@@ -2,39 +2,57 @@
  * @Author: 徐海瑞
  * @Date: 2024-09-24 17:14:22
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2024-09-24 18:00:01
+ * @Last Modified time: 2024-09-25 15:45:47
  */
 
 import { CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer';
 
 class CSS2DObjectHelper {
-  constructor(camera) {
+  constructor() {
     this.cache = new Map();
-    this.camera = camera;
-    this.baseFontSize = 16;
-    this.scaleFactor = 100;
+    this.currentScale = 1;
+    this.baseFontSize = 14;
+    this.minScale = 0.5;
+    this.maxScale = 2;
+    this.scaleSensitivity = 0.001; // 控制缩放速度
   }
 
-  create(labelName, textContent, cssText) {
+  create(labelName, element) {
+    // console.log('labelName', labelName);
     const cacheKey = labelName;
+
     if (this.cache.has(cacheKey)) {
-      console.log(`复用${cacheKey}`, this.cache.get(cacheKey));
+      // console.log(`复用${cacheKey}`, this.cache.get(cacheKey));
       return this.cache.get(cacheKey);
     }
-    const element = document.createElement('div');
-    element.textContent = textContent;
-    element.style.cssText = cssText;
+    element.style.fontSize = `${this.baseFontSize}px`;
     const object = new CSS2DObject(element);
     this.cache.set(cacheKey, object);
     return object;
   }
 
+  handleMouseWheel(event, value = 0) {
+    const deltaY = (event && event.deltaY) || value;
+    // console.log('deltaY', deltaY);
+    this.currentScale -= deltaY * this.scaleSensitivity;
+    this.currentScale = Math.max(this.minScale, Math.min(this.currentScale, this.maxScale));
+    this.updateFontSizes();
+  }
+
   updateFontSizes() {
+    const fontSize = this.baseFontSize * this.currentScale > 18 ? 18 : this.baseFontSize * this.currentScale;
+    // console.log('fontSize', fontSize);
+    // console.log('this.cache', this.cache);
     this.cache.forEach(object => {
-      const distance = this.camera.position.distanceTo(object.position);
-      const fontSize = this.baseFontSize * (this.scaleFactor / distance);
       object.element.style.fontSize = `${fontSize}px`;
     });
+  }
+
+  setScalingParameters(baseFontSize, minScale, maxScale, sensitivity) {
+    this.baseFontSize = baseFontSize;
+    this.minScale = minScale;
+    this.maxScale = maxScale;
+    this.scaleSensitivity = sensitivity;
   }
 }
 

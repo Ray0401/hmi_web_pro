@@ -2,7 +2,7 @@
  * @Author: 徐海瑞
  * @Date: 2023-03-08 14:18:50
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2024-07-03 10:30:21
+ * @Last Modified time: 2024-09-25 15:45:58
  *
  * 修改group操作
  *
@@ -32,6 +32,7 @@ function setPerspectiveCamera() {
 //右下角 + - 按钮
 function setCamera2Y(index) {
   this.controls2.handleMouseWheel({ deltaY: index });
+  // this.CSS2DWrapper.handleMouseWheel(index / 100);
 }
 // 修改正交相机
 function setOrthoCamera() {

@@ -12,6 +12,20 @@
     background: url('./assets/images/loadlogo.png') 100% 100% / cover no-repeat;
   }
 
+  img {
+    /* 禁止图片被选中 */
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;
+
+    // 禁止拖拽
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+  }
   .work-dialog-outer {
     width: 350px;
     display: flex;

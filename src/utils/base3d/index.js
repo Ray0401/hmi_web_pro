@@ -2,7 +2,7 @@
  * @Author: 徐海瑞
  * @Date: 2023-03-08 14:17:56
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2024-09-24 17:17:51
+ * @Last Modified time: 2024-09-25 14:59:13
  *
  * three主文件
  *
@@ -100,7 +100,12 @@ class Base3d {
     this.movePointParams = {}; // 移动停靠点的数据参数
     this.collisionDetectionList = []; //碰撞检测列表
     this.originZ = 0; //手动指点旋转原始值;
-    this.CSS2DObjectHelper = new CSS2DObjectHelper(this.camera2);
+    this.CSS2DWrapper = new CSS2DObjectHelper();
+
+    // 添加鼠标滚轮事件监听缩放字体
+    window.addEventListener('wheel', event => {
+      this.CSS2DWrapper.handleMouseWheel(event);
+    });
   }
 
   // 添加网格线
