@@ -103,9 +103,9 @@ class Base3d {
     this.CSS2DWrapper = new CSS2DObjectHelper();
 
     // 添加鼠标滚轮事件监听缩放字体
-    window.addEventListener('wheel', event => {
-      this.CSS2DWrapper.handleMouseWheel(event);
-    });
+    // window.addEventListener('wheel', event => {
+    //   this.CSS2DWrapper.handleMouseWheel(event);
+    // });
   }
 
   // 添加网格线

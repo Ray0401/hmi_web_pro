@@ -2,7 +2,7 @@
  * @Author: 徐海瑞
  * @Date: 2023-03-08 14:17:33
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2024-09-25 15:18:07
+ * @Last Modified time: 2024-09-25 17:55:47
  *
  * 车辆模型相关操作
  *
@@ -46,12 +46,11 @@ function processLoadedObject(_this, obj, type, model, data, resolve) {
   const earthDiv = document.createElement('div');
   earthDiv.style.color = '#dfdfdf';
   earthDiv.style.top = '-10px';
-  const deviceName = (data && data.name) || _this.carName || model;
+  const deviceName = _this.carName || model;
   const earthLabel = _this.CSS2DWrapper.create(deviceName, earthDiv);
   earthLabel.element.textContent = _this.carName ?? model;
   earthLabel.layers.set(0);
   obj.add(earthLabel);
-
   obj.rotateZ(THREE.MathUtils.degToRad(90));
   obj.rotateX(THREE.MathUtils.degToRad(90));
   if (data) {

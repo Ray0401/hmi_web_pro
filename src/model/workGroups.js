@@ -2,7 +2,7 @@
  * @Author: 徐海瑞
  * @Date: 2023-01-31 10:39:33
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2024-09-25 15:48:39
+ * @Last Modified time: 2024-09-25 18:06:25
  * 绘制推土机作业区域
  *
  */
@@ -83,7 +83,7 @@ class Boundary {
 
     // 为排土终端的排土块设置标签名称以及其他属性
     if (this.isSoilTerminal) {
-      const soilBlockNameLabel = this.createLabel(this.polys, this.name);
+      const soilBlockNameLabel = this.createLabel.bind(window._base3d)(this.polys, this.name, 'soilBlockLabel');
       // 设置排土块状态
       const curData = data.find(item => item.group_num == dock_group_index && item.stop_type == 2) ?? {};
 
@@ -117,11 +117,11 @@ class Boundary {
   }
 
   // 创建标签
-  createLabel(data, name) {
-    if (textCache[name]) {
-      // 如果已经存在,直接返回缓存中的对象
-      return textCache[name];
-    }
+  createLabel(data, name, soilBlockLabel) {
+    // if (textCache[name]) {
+    //   // 如果已经存在,直接返回缓存中的对象
+    //   return textCache[name];
+    // }
 
     let lons = [];
     let lats = [];
@@ -132,15 +132,24 @@ class Boundary {
     lons.sort((a, b) => a - b);
     lats.sort((a, b) => a - b);
 
+    // const elementDiv = document.createElement('div');
+    // const elementLabel = new CSS2DObject(elementDiv);
+    // elementLabel.position.set(lons[0] + (lons.at(-1) - lons[0]) / 2, lats[0] + (lats.at(-1) - lats[0]) / 2, 2);
+    // elementLabel.layers.set(0);
+    // let div = elementLabel.element;
+    // div.innerHTML = name;
+    // div.style.color = 'white';
+    // div.style.fontSize = '9px';
+    // textCache[name] = elementLabel;
+
     const elementDiv = document.createElement('div');
-    const elementLabel = new CSS2DObject(elementDiv);
+    const elementLabel = this.CSS2DWrapper.create(soilBlockLabel, elementDiv);
+    elementLabel.element.style.color = '#dfdfdf';
+    elementLabel.element.style.fontSize = '9px';
+    elementLabel.element.innerHTML = name;
     elementLabel.position.set(lons[0] + (lons.at(-1) - lons[0]) / 2, lats[0] + (lats.at(-1) - lats[0]) / 2, 2);
     elementLabel.layers.set(0);
-    let div = elementLabel.element;
-    div.innerHTML = name;
-    div.style.color = 'white';
-    div.style.fontSize = '9px';
-    textCache[name] = elementLabel;
+
     return elementLabel;
   }
 }

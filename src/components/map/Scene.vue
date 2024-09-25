@@ -65,7 +65,7 @@
   import { SCENE_SOCKET_MESSAGE } from './socketMessage';
   import { MINE_CARD, ADOPT, SOIL } from '@/constant/index';
   import { getAssetsFile, sendMsgToBackend } from '@/utils/utils';
-  window._base3d = null;
+  window._base3d = {};
 
   export default {
     props: ['collectList', 'collectFileListPoint'],
@@ -450,9 +450,9 @@
       },
     },
     beforeDestroy() {
-      window._base3d = null;
-      window.materialsCache = null;
-      window.objectsCache = null;
+      window._base3d = {};
+      window.materialsCache = {};
+      window.objectsCache = {};
     },
   };
 </script>

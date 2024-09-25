@@ -2,7 +2,7 @@
  * @Author: 徐海瑞
  * @Date: 2024-09-24 17:14:22
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2024-09-25 15:45:47
+ * @Last Modified time: 2024-09-25 18:07:07
  */
 
 import { CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer';
@@ -18,12 +18,10 @@ class CSS2DObjectHelper {
   }
 
   create(labelName, element) {
-    // console.log('labelName', labelName);
     const cacheKey = labelName;
-
     if (this.cache.has(cacheKey)) {
       // console.log(`复用${cacheKey}`, this.cache.get(cacheKey));
-      return this.cache.get(cacheKey);
+      return this.cache.get(cacheKey).clone();
     }
     element.style.fontSize = `${this.baseFontSize}px`;
     const object = new CSS2DObject(element);
@@ -33,7 +31,6 @@ class CSS2DObjectHelper {
 
   handleMouseWheel(event, value = 0) {
     const deltaY = (event && event.deltaY) || value;
-    // console.log('deltaY', deltaY);
     this.currentScale -= deltaY * this.scaleSensitivity;
     this.currentScale = Math.max(this.minScale, Math.min(this.currentScale, this.maxScale));
     this.updateFontSizes();
@@ -41,8 +38,6 @@ class CSS2DObjectHelper {
 
   updateFontSizes() {
     const fontSize = this.baseFontSize * this.currentScale > 18 ? 18 : this.baseFontSize * this.currentScale;
-    // console.log('fontSize', fontSize);
-    // console.log('this.cache', this.cache);
     this.cache.forEach(object => {
       object.element.style.fontSize = `${fontSize}px`;
     });
