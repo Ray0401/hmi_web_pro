@@ -2,7 +2,7 @@
  * @Author: 徐海瑞
  * @Date: 2023-03-08 14:19:17
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2024-09-23 17:44:02
+ * @Last Modified time: 2024-09-25 18:46:21
  *
  * uni.on监听函数
  *
@@ -100,8 +100,10 @@ export function initOn() {
   // 接收矿卡名称
   Vue.prototype.$bus.$on('carName', (data = {}) => {
     this.carName = data.data;
-    if (this.scene.getObjectByName('positionCarName'))
+    if (this.scene.getObjectByName('positionCarName')) {
+      console.log(this.scene.getObjectByName('positionCarName'), this.carName);
       this.scene.getObjectByName('positionCarName').element.innerHTML = data.data;
+    }
   });
   // 接收恢复跟随的信号
   Vue.prototype.$bus.$on('setPosition', () => {

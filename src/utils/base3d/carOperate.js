@@ -2,7 +2,7 @@
  * @Author: 徐海瑞
  * @Date: 2023-03-08 14:17:33
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2024-09-25 17:55:47
+ * @Last Modified time: 2024-09-26 10:08:47
  *
  * 车辆模型相关操作
  *
@@ -48,7 +48,7 @@ function processLoadedObject(_this, obj, type, model, data, resolve) {
   earthDiv.style.top = '-10px';
   const deviceName = _this.carName || model;
   const earthLabel = _this.CSS2DWrapper.create(deviceName, earthDiv);
-  earthLabel.element.textContent = _this.carName ?? model;
+  earthLabel.element.innerHTML = _this.carName ?? model;
   earthLabel.layers.set(0);
   obj.add(earthLabel);
   obj.rotateZ(THREE.MathUtils.degToRad(90));
@@ -61,12 +61,12 @@ function processLoadedObject(_this, obj, type, model, data, resolve) {
     if (showDistance == '1') {
       const distanceColor = `color:${distance < 60 ? color_aroundcar_warning : color_aroundcar_safe}`;
       const _distance = parseInt(distance);
-      earthDiv.innerHTML = `
+      earthLabel.element.innerHTML = `
          <span>${name}</span>
          <span style=${distanceColor}>${_distance}m</span>
         `;
     } else {
-      earthLabel.element.textContent = name;
+      earthLabel.element.innerHTML = name;
     }
     data.x = parseFloat(lon);
     data.y = parseFloat(lat);
@@ -84,6 +84,7 @@ function processLoadedObject(_this, obj, type, model, data, resolve) {
     _this.carGroup.rotateZ(THREE.MathUtils.degToRad(90));
     _this.carGroup.renderOrder = 1;
     earthLabel.name = 'positionCarName';
+    earthLabel.element.innerHTML = _this.carName;
   }
 
   resolve('加载模型成功');
@@ -188,7 +189,7 @@ function setAroundCar(data = []) {
 function updateCar() {
   if (!this.carModel) return;
   this.updateNum++;
-  if (this.updateNum <= 3) return;
+  if (this.updateNum <= 5) return;
   if ('lon' in this.carPosition) {
     this.carPosition.x = parseFloat(this.carPosition.lon);
     this.carPosition.y = parseFloat(this.carPosition.lat);
