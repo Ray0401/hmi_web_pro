@@ -2,7 +2,7 @@
  * @Author: 徐海瑞
  * @Date: 2023-03-08 14:18:19
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2024-09-24 13:38:00
+ * @Last Modified time: 2024-09-26 10:40:09
  *
  * 初始化场景文件
  *
@@ -51,9 +51,9 @@ function init() {
   this.initScene();
   this.initCamera();
   this.initRender();
+  this.initControls(); //控制器
   this.initOn();
-  //控制器
-  this.initControls();
+
   //添加物体
   //this.addMesh();
   // 监听场景大小改变，调整渲染尺寸

@@ -2,7 +2,7 @@
  * @Author: 徐海瑞
  * @Date: 2023-03-08 14:17:33
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2024-09-26 10:08:47
+ * @Last Modified time: 2024-09-26 14:52:45
  *
  * 车辆模型相关操作
  *
@@ -10,85 +10,10 @@
 import * as THREE from 'three';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
-import { CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer';
+// import { CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer';
 import variables from '../../styles/variables.module.scss';
-import { getAssetsFile, matchVehicleModel } from '../utils';
+import { matchVehicleModel } from '../utils';
 const { color_aroundcar_safe, color_aroundcar_warning } = variables;
-
-function matchModel(name, ext) {
-  const url = new URL(`../../assets/models/${name}.${ext}`, import.meta.url);
-  return url.href;
-}
-
-function processLoadedObject(_this, obj, type, model, data, resolve) {
-  // console.log('obj instanceof THREE.Group', obj, obj instanceof THREE.Group);
-  if (!obj || !(obj instanceof THREE.Group)) return;
-  obj.traverse(item => {
-    if (item.material && Array.isArray(item.material)) {
-      item.material.forEach(item1 => {
-        item1.transparent = true;
-      });
-      item.renderOrder = 2;
-    }
-  });
-  if (type != 'mineCard') obj.scale.set(1.5, 1.5, 1.5);
-  obj.renderOrder = 2;
-  // const earthDiv = document.createElement('div');
-  // earthDiv.style.color = '#ffffff';
-  // earthDiv.style.fontSize = '18px';
-  // earthDiv.style.position = 'absolute';
-  // earthDiv.style.top = '-10px';
-  // earthDiv.textContent = _this.carName ?? model;
-  // const earthLabel = new CSS2DObject(earthDiv);
-  // earthLabel.layers.set(0);
-  // obj.add(earthLabel);
-
-  const earthDiv = document.createElement('div');
-  earthDiv.style.color = '#dfdfdf';
-  earthDiv.style.top = '-10px';
-  const deviceName = _this.carName || model;
-  const earthLabel = _this.CSS2DWrapper.create(deviceName, earthDiv);
-  earthLabel.element.innerHTML = _this.carName ?? model;
-  earthLabel.layers.set(0);
-  obj.add(earthLabel);
-  obj.rotateZ(THREE.MathUtils.degToRad(90));
-  obj.rotateX(THREE.MathUtils.degToRad(90));
-  if (data) {
-    const { name, lon, lat, heading, distance, showDistance } = data;
-    let group = new THREE.Group();
-    group.name = name;
-    obj.name = name + '_obj';
-    if (showDistance == '1') {
-      const distanceColor = `color:${distance < 60 ? color_aroundcar_warning : color_aroundcar_safe}`;
-      const _distance = parseInt(distance);
-      earthLabel.element.innerHTML = `
-         <span>${name}</span>
-         <span style=${distanceColor}>${_distance}m</span>
-        `;
-    } else {
-      earthLabel.element.innerHTML = name;
-    }
-    data.x = parseFloat(lon);
-    data.y = parseFloat(lat);
-    let pos = window.flatModel.convertLatLonToWorldPos(data);
-    group.position.set(pos.x, pos.y, 1.01);
-    obj.rotateY(THREE.MathUtils.degToRad(parseFloat(-heading)));
-    _this.headingObj[name] = parseFloat(heading);
-    group.rotateZ(THREE.MathUtils.degToRad(90));
-    group.add(obj);
-    _this.mapGroup.add(group);
-  } else {
-    _this.carModel && _this.carModel.removeFromParent();
-    _this.carModel = obj;
-    _this.carGroup.add(_this.carModel);
-    _this.carGroup.rotateZ(THREE.MathUtils.degToRad(90));
-    _this.carGroup.renderOrder = 1;
-    earthLabel.name = 'positionCarName';
-    earthLabel.element.innerHTML = _this.carName;
-  }
-
-  resolve('加载模型成功');
-}
 
 // 加载车辆
 function loadCar(type = 100, data) {
@@ -189,7 +114,7 @@ function setAroundCar(data = []) {
 function updateCar() {
   if (!this.carModel) return;
   this.updateNum++;
-  if (this.updateNum <= 5) return;
+  if (this.updateNum <= 3) return;
   if ('lon' in this.carPosition) {
     this.carPosition.x = parseFloat(this.carPosition.lon);
     this.carPosition.y = parseFloat(this.carPosition.lat);
@@ -217,6 +142,80 @@ function updateCar() {
     this.setGridLines();
   }
   this.updateNum = 0;
+}
+
+function matchModel(name, ext) {
+  const url = new URL(`../../assets/models/${name}.${ext}`, import.meta.url);
+  return url.href;
+}
+
+function processLoadedObject(_this, obj, type, model, data, resolve) {
+  // console.log('processLoadedObject:', `type:${type},model:${model},data:${data}`);
+  if (!obj || !(obj instanceof THREE.Group)) return;
+  obj.traverse(item => {
+    if (item.material && Array.isArray(item.material)) {
+      item.material.forEach(item1 => {
+        item1.transparent = true;
+      });
+      item.renderOrder = 2;
+    }
+  });
+  if (type != 'mineCard') obj.scale.set(1.5, 1.5, 1.5);
+  obj.renderOrder = 2;
+  // const earthDiv = document.createElement('div');
+  // earthDiv.style.color = '#ffffff';
+  // earthDiv.style.fontSize = '18px';
+  // earthDiv.style.position = 'absolute';
+  // earthDiv.style.top = '-10px';
+  // earthDiv.textContent = _this.carName ?? model;
+  // const earthLabel = new CSS2DObject(earthDiv);
+  // earthLabel.layers.set(0);
+  // obj.add(earthLabel);
+
+  const earthDiv = document.createElement('div');
+  earthDiv.style.color = '#dfdfdf';
+  earthDiv.style.top = '-10px';
+  const deviceName = model;
+  const earthLabel = _this.CSS2DWrapper.create(deviceName, earthDiv);
+  earthLabel.layers.set(0);
+  obj.add(earthLabel);
+  obj.rotateZ(THREE.MathUtils.degToRad(90));
+  obj.rotateX(THREE.MathUtils.degToRad(90));
+  if (data) {
+    const { name, lon, lat, heading, distance, showDistance } = data;
+    let group = new THREE.Group();
+    group.name = name;
+    obj.name = name + '_obj';
+    if (showDistance == '1') {
+      const distanceColor = `color:${distance < 60 ? color_aroundcar_warning : color_aroundcar_safe}`;
+      const _distance = parseInt(distance);
+      earthLabel.element.innerHTML = `
+         <span>${name}</span>
+         <span style=${distanceColor}>${_distance}m</span>
+        `;
+    } else {
+      earthLabel.element.innerHTML = name;
+    }
+    data.x = parseFloat(lon);
+    data.y = parseFloat(lat);
+    let pos = window.flatModel.convertLatLonToWorldPos(data);
+    group.position.set(pos.x, pos.y, 1.01);
+    obj.rotateY(THREE.MathUtils.degToRad(parseFloat(-heading)));
+    _this.headingObj[name] = parseFloat(heading);
+    group.rotateZ(THREE.MathUtils.degToRad(90));
+    group.add(obj);
+    _this.mapGroup.add(group);
+  } else {
+    _this.carModel && _this.carModel.removeFromParent();
+    _this.carModel = obj;
+    _this.carGroup.add(_this.carModel);
+    _this.carGroup.rotateZ(THREE.MathUtils.degToRad(90));
+    _this.carGroup.renderOrder = 1;
+    earthLabel.name = 'positionCarLabel';
+    earthLabel.element.innerHTML = _this.carName ?? model;
+  }
+
+  resolve('加载模型成功');
 }
 
 // 清理并释放组及其子对象所占用的资源

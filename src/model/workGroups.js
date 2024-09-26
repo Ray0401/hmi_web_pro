@@ -2,7 +2,7 @@
  * @Author: 徐海瑞
  * @Date: 2023-01-31 10:39:33
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2024-09-25 18:06:25
+ * @Last Modified time: 2024-09-26 13:48:16
  * 绘制推土机作业区域
  *
  */
@@ -11,10 +11,10 @@ import { MeshLineMaterial } from 'three.meshline';
 import earcut from 'earcut';
 import store from '../store';
 import { SOIL } from '@/constant';
-import { CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer';
+// import { CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer';
 import variables from '../styles/variables.module.scss';
 const { color_soilblock_open, color_soilblock_close } = variables;
-let textCache = {}; // 缓存;
+// let textCache = {}; // 缓存;
 
 class Boundary {
   constructor() {
@@ -183,7 +183,7 @@ class Boundarys {
       side: THREE.DoubleSide,
     };
 
-    textCache = {};
+    // textCache = {};
 
     if (this.group.children.length) {
       // 清空point的innerHTML

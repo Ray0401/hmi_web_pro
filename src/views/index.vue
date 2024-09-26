@@ -93,9 +93,11 @@
       message.value = '网络链接不稳定';
       btnText.value = '自动重连中...';
       disabled.value = true;
-      setTimeout(() => {
-        terminalType.value = vehicleTerminal;
-      }, 500);
+      // setTimeout(() => {
+      //   terminalType.value = vehicleTerminal;
+      // }, 80);
+
+      terminalType.value = vehicleTerminal;
     }
   });
 
@@ -119,16 +121,14 @@
 
   const confirm = () => {
     if (disabled.value) return;
-    window.location.reload();
 
-    // let img = new Image();
-    // img.src = `${window.location.origin}/loadlogo.png?time=${new Date().getTime()}`;
-    // img.onload = img => {
-    //   showModal.value = false;
-    //   window.location.reload();
-    // };
-    // img.onerror = err => {
-    //   message.value = '网关错误，请稍后重试';
-    // };
+    let img = new Image();
+    img.src = `${window.location.origin}/loadlogo.png?time=${new Date().getTime()}`;
+    img.onload = img => {
+      window.location.reload();
+    };
+    img.onerror = err => {
+      message.value = '网关错误，请稍后重试';
+    };
   };
 </script>

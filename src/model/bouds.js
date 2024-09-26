@@ -2,7 +2,7 @@
  * @Author: 徐海瑞
  * @Date: 2023-01-31 10:24:49
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2024-09-25 15:45:05
+ * @Last Modified time: 2024-09-26 13:48:47
  *
  * 绘制作业区域边界
  *
@@ -133,7 +133,7 @@ class Boundary {
       let poly = polylabel([list], 1.0);
       const earthDiv = document.createElement('div');
       earthDiv.style.color = '#ffffff';
-      earthDiv.style.fontSize = '16px';
+      earthDiv.style.fontSize = '12px';
       earthDiv.textContent = this.name || this.id;
       const earthLabel = new CSS2DObject(earthDiv);
       earthLabel.position.set(poly[0], poly[1], 2);

@@ -130,7 +130,7 @@ export const EXCAVATOR_SOCKET_MESSAGE = that => {
     },
     // 运营状态结果
     operationStatusResult: data => {
-      console.log('data', data.data);
+      // console.log('data', data.data);
       that.$toast(data.data);
       that.$store.commit('setMessageList', data.data);
     },
