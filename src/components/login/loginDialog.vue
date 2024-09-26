@@ -246,9 +246,9 @@
             this.loggedFlag = true;
             setLocalStorage('loggedFlag', true);
             setLocalStorage('userInfo', JSON.stringify(this.userInfoList));
-            this.$toast(this.toLang('loginSucceeded'));
+            this.$toast.success(this.toLang('loginSucceeded'));
           } else {
-            this.$toast(this.toLang('loginFailed'));
+            this.$toast.error(this.toLang('loginFailed'));
           }
         }
         // 登出响应

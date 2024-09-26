@@ -47,11 +47,15 @@
     <Message :visible="messageVisible" />
 
     <!-- 排土块详情 -->
-    <soil-block-detail
-      :visible="soilBlockDetailVisible"
-      :detailData="soilBlockDetailData"
-      @closeDrawer="closeSoilBlockDetail"
-    />
+
+    <template v-if="soilBlockDetailVisible">
+      <soil-block-detail
+        :visible="soilBlockDetailVisible"
+        :detailData="soilBlockDetailData"
+        @closeDrawer="closeSoilBlockDetail"
+      />
+    </template>
+
     <!-- 排土块任务 -->
 
     <soil-block-task :visible="soilBlockTaskVisible" :soilTaskData="soilTaskData" @closeDrawer="closeSoilBlockTask" />

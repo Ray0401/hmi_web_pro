@@ -78,13 +78,17 @@ export const BULLDOZER_SOCKET_MESSAGE = that => {
     },
     [TYPE.SYNC_CLEAN_STATUS]: data => {
       if (data?.data?.status == 4) {
-        this.$toast('任务申请失败');
+        this.$toast.error('任务申请失败');
       } else {
         that.$bus.$emit('syncCleanStatus', data.data);
       }
     },
     [TYPE.VOICEPLAYVOLUME]: data => {
       that.$store.commit('setVolume', data.volume);
+    },
+    [TYPE.SETDUMPSTATUSRESP]: data => {
+      that.$toast.error(data.message);
+      that.$bus.$emit('openDumpStatusResp');
     },
   };
 };

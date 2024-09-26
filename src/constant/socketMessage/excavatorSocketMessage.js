@@ -131,7 +131,7 @@ export const EXCAVATOR_SOCKET_MESSAGE = that => {
     // 运营状态结果
     operationStatusResult: data => {
       // console.log('data', data.data);
-      that.$toast(data.data);
+      that.$toast.warning(data.data);
       that.$store.commit('setMessageList', data.data);
     },
     // 获取铲窝是否自动

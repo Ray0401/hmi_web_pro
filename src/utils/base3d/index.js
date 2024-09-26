@@ -245,7 +245,7 @@ class Base3d {
       // }
     }
     if (bool) {
-      Vue.prototype.$toast(type == 'point' ? '指点位置重叠,请重新指点' : '指点位置与边界冲突,请重新指点');
+      Vue.prototype.$toast.warning(type == 'point' ? '指点位置重叠,请重新指点' : '指点位置与边界冲突,请重新指点');
       origin.material.map = this.pointRed;
       // console.log('origin.material.map', origin.material.map);
       Vue.prototype.$bus.$emit('stopSendPoint', true);

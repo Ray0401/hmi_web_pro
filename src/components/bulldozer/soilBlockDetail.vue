@@ -134,7 +134,7 @@
           :width="70"
           :height="35"
           color="#FF5900"
-          :value="detailData.basicInfo.status != 2"
+          :value="btnStatus"
           @change="switchChange"
           :disabled="switchDisabled"
         />
@@ -187,18 +187,22 @@
       default: () => {},
     },
   });
+
+  const btnStatus = computed(() => {
+    return props.detailData.basicInfo.status != 2;
+  });
   const statusColor = computed(() => {
-    const status = props?.detailData?.basicInfo?.status ?? '2';
+    const status = props.detailData.basicInfo.status ?? '2';
     return status == '1' ? '#00ff48' : status == '2' ? '#FF3000' : '#ffed3a';
   });
 
   const statusText = computed(() => {
-    const status = props?.detailData?.basicInfo?.status ?? '2';
+    const status = props.detailData.basicInfo.status ?? '2';
     return status == '1' ? '开启' : status == '2' ? '关闭' : '已分配';
   });
   const switchDisabled = computed(() => {
     // 排土块关闭且排土块内所有排土点都是关闭的状态,排土块则无法开启
-    const { basicInfo = {}, pointInfo = {} } = props?.detailData;
+    const { basicInfo = {}, pointInfo = {} } = props.detailData;
     return (basicInfo.status == '2' && pointInfo.every(item => item.status == '2')) ?? false;
   });
 
@@ -215,7 +219,7 @@
   };
 
   const switchChange = data => {
-    const { value } = data?.detail || {};
+    const { value } = data.value;
     const { object_id, packSpaceGroupNum, packSpaceGroupName } = store.state.carInDumpPosition;
     sendSocket({
       type: SOCKET_TYPE.SET_DUMP_STATUS,

@@ -108,7 +108,7 @@ rmodeFlag: true  设置/登录/作业  false 退出 -->
         if (!bool) {
           this.collectState = 1;
         } else {
-          if (this.sensorCollectFileList?.length) return this.$toast('请先处理未上传文件');
+          if (this.sensorCollectFileList?.length) return this.$toast.warning('请先处理未上传文件');
           // this.collectState = 1;
           this.$emit('setCollectState', { data: 10 });
         }

@@ -81,6 +81,7 @@ export const SOCKET_TYPE = {
   DUMPLINE_DATA: 'DumplineData', // 获取排土块/排土点数据
   SET_DUMP_STATUS: 'SetDumpStatus', // 设置排土块的开启或者关闭状态
   SYNC_CLEAN_STATUS: 'syncCleanStatus', // 平台同步推土机排土任务进度
+  SETDUMPSTATUSRESP: 'SetDumpStatusResp', // 排土块的开启申请应答
 
   WORKAREA_BLOCKED: 'workAreaBlocked', // 申请作业区解封/封锁
   WORKAREA_BLOCKED_LIST: 'workAreaBlockedList', // 反显作业区封锁状态

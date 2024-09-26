@@ -60,7 +60,7 @@
         this.reasonListValue = res;
       },
       confirmchangebtn() {
-        if (!this.reasonListValue.text) return this.$toast('请选择');
+        if (!this.reasonListValue.text) return this.$toast.warning('请选择');
         let obj = {
           type: 'ExcavatorCmd',
           truckName: this.pointItem.name || this.pointItem?.child_point?.name || '',

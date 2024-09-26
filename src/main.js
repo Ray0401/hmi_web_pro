@@ -47,6 +47,12 @@ const options = {
   },
 };
 Vue.use(Toast, options);
+// this.$toast("Default toast");
+// this.$toast.info("Info toast");
+// this.$toast.success("Success toast");
+// this.$toast.error("Error toast");
+// this.$toast.warning("Warning toast");
+
 // switch组件
 import ToggleButton from 'vue-js-toggle-button';
 Vue.use(ToggleButton);

@@ -284,7 +284,7 @@
         sendMsgToBackend(`${this.toLang(item.index == 1 ? 'resumeDriving' : 'emergencyPullOver')}已发送`);
       },
       setSettingBackDistance() {
-        if (!this.canClickBackDistanceBtn) return this.$toast('请等待车辆后移规划结果');
+        if (!this.canClickBackDistanceBtn) return this.$toast.warning('请等待车辆后移规划结果');
         if (!this.isTaskLoad) return false;
         this.showSettingBackDistance = true;
       },

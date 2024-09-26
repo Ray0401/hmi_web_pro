@@ -2,7 +2,7 @@
  * @Author: 徐海瑞
  * @Date: 2022-10-31 17:43:49
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2024-07-17 15:41:25
+ * @Last Modified time: 2024-09-26 17:17:42
  *
  * 推土机mixin
  */
@@ -117,6 +117,11 @@ export default {
 
     this.$bus.$on('selectTargetWork', value => {
       this.messageVisible = value == 'yes' ? false : true;
+    });
+
+    // 排土块增量更新中，禁止打开排土块
+    this.$bus.$on('openDumpStatusResp', () => {
+      this.soilBlockDetailVisible = false;
     });
   },
 
