@@ -102,19 +102,6 @@ export default {
       this.soilBlockDetailVisible = true;
     });
 
-    // 更新排土块详情弹窗数据
-    this.$bus.$on('updateSoilBlockDetail', num => {
-      if (this.soilBlockDetailVisible) {
-        const isCurrentBlock = this.soilBlockDetailData?.basicInfo?.name?.includes(num);
-        const target = this.$store.state.bulldozer['8B05Data'].find(
-          item => item.stop_type == '2' && item.group_num == num && isCurrentBlock
-        );
-        if (target) {
-          this.soilBlockDetailData.basicInfo.status = target.stop_group_status;
-        }
-      }
-    });
-
     this.$bus.$on('selectTargetWork', value => {
       this.messageVisible = value == 'yes' ? false : true;
     });

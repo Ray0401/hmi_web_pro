@@ -344,8 +344,6 @@ export function initOn() {
           target.material.color = new THREE.Color(colorObj[stop_group_status]);
           // 改属性
           target.soilBlockStatus = stop_group_status;
-
-          Vue.prototype.$bus.$emit('updateSoilBlockDetail', group_num);
         }
       }
       // 排土点

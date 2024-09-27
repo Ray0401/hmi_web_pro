@@ -199,6 +199,30 @@
       WarningDialog,
     },
     mixins: [publicMixin, bulldozerMixin, auxiliaryMixin],
+    computed: {
+      soilBlockData() {
+        return this.$store.state.bulldozer['8B05Data'];
+      },
+    },
+    watch: {
+      // 监听地图是否加载完成
+      soilBlockData: {
+        handler: function (val) {
+          if (this.soilBlockDetailVisible) {
+            if (Array.isArray(val)) {
+              const isCurrentBlock = val.find(
+                item => item.stop_type == '2' && this.soilBlockDetailData.basicInfo.name.includes(item.group_num)
+              );
+              if (isCurrentBlock) {
+                this.soilBlockDetailData.basicInfo.status = isCurrentBlock.stop_group_status;
+              }
+            }
+          }
+        },
+        deep: true,
+        immediate: true,
+      },
+    },
     data() {
       return {
         constantObj,
