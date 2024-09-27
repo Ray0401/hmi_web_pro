@@ -2,7 +2,7 @@
  * @Author: 徐海瑞
  * @Date: 2023-01-31 10:38:01
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2024-09-27 14:32:57
+ * @Last Modified time: 2024-09-27 17:59:20
  *
  * 绘制停靠位
  *
@@ -34,7 +34,7 @@ const createLabel = (data, name) => {
   elementLabel.layers.set(0);
   let div = elementLabel.element;
   div.innerHTML = name;
-  div.style.color = 'white';
+  div.style.color = '#ccc';
   div.style.marginTop = '-10px';
   div.style.fontSize = '8px';
   textCache[name] = elementLabel;

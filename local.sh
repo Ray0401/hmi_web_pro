@@ -16,7 +16,7 @@ yarn build
 # 压缩
 cd ./dist/build
 # 定义压缩文件夹名
-zip_name=$(date +%Y%m%d)
+zip_name=$(date +%Y%m%d%H%M%S)
 zip  -r hmi-pro-$zip_name.zip hmi
 rm -rf hmi
 echo "生成 hmi-pro-$zip_name.zip"

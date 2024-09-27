@@ -2,7 +2,7 @@
  * @Author: 徐海瑞
  * @Date: 2023-01-31 10:39:33
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2024-09-26 13:48:16
+ * @Last Modified time: 2024-09-27 18:01:14
  * 绘制推土机作业区域
  *
  */
@@ -144,7 +144,7 @@ class Boundary {
 
     const elementDiv = document.createElement('div');
     const elementLabel = this.CSS2DWrapper.create(soilBlockLabel, elementDiv);
-    elementLabel.element.style.color = '#dfdfdf';
+    elementLabel.element.style.color = '#eee';
     elementLabel.element.style.fontSize = '9px';
     elementLabel.element.innerHTML = name;
     elementLabel.position.set(lons[0] + (lons.at(-1) - lons[0]) / 2, lats[0] + (lats.at(-1) - lats[0]) / 2, 2);
