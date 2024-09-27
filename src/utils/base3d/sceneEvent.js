@@ -167,11 +167,11 @@ function onMouseClick(event) {
     // 非采集模式下的点选作业区
     const { map_type, object_id, packSpaceGroupName } = store.state.carInDumpPosition || {};
     if (isSoilBlock) {
-      if (map_type == 3 && object_id == workAreaTarget.object.workAreaId) {
-        Vue.prototype.$bus.$emit('openSoilBlockDetail', soilBlockTarget); // 推土机在排土场内 打开排土块详情弹窗
-      }
+      // if (map_type == 3 && object_id == workAreaTarget.object.workAreaId) {
+      //   Vue.prototype.$bus.$emit('openSoilBlockDetail', soilBlockTarget); // 推土机在排土场内 打开排土块详情弹窗
+      // }
 
-      // Vue.prototype.$bus.$emit('openSoilBlockDetail', soilBlockTarget); // 推土机在排土场内 打开排土块详情弹窗
+      Vue.prototype.$bus.$emit('openSoilBlockDetail', soilBlockTarget); // 推土机在排土场内 打开排土块详情弹窗
     } else if (isWorkArea) {
       // 当前车辆在用户点击的作业区内
       if ((map_type == 2 || map_type == 3) && object_id == workAreaTarget.object.workAreaId) {

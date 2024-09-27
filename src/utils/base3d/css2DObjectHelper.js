@@ -11,7 +11,7 @@ class CSS2DObjectHelper {
   constructor() {
     this.cache = new Map();
     this.currentScale = 1;
-    this.baseFontSize = 14;
+    this.baseFontSize = 12;
     this.minScale = 0.5;
     this.maxScale = 2;
     this.scaleSensitivity = 0.001; // 控制缩放速度

@@ -2,7 +2,7 @@
  * @Author: 徐海瑞
  * @Date: 2023-03-08 14:17:33
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2024-09-26 14:52:45
+ * @Last Modified time: 2024-09-27 14:12:44
  *
  * 车辆模型相关操作
  *
@@ -162,19 +162,10 @@ function processLoadedObject(_this, obj, type, model, data, resolve) {
   });
   if (type != 'mineCard') obj.scale.set(1.5, 1.5, 1.5);
   obj.renderOrder = 2;
-  // const earthDiv = document.createElement('div');
-  // earthDiv.style.color = '#ffffff';
-  // earthDiv.style.fontSize = '18px';
-  // earthDiv.style.position = 'absolute';
-  // earthDiv.style.top = '-10px';
-  // earthDiv.textContent = _this.carName ?? model;
-  // const earthLabel = new CSS2DObject(earthDiv);
-  // earthLabel.layers.set(0);
-  // obj.add(earthLabel);
 
   const earthDiv = document.createElement('div');
   earthDiv.style.color = '#dfdfdf';
-  earthDiv.style.top = '-10px';
+  earthDiv.style.top = '-5px';
   const deviceName = model;
   const earthLabel = _this.CSS2DWrapper.create(deviceName, earthDiv);
   earthLabel.layers.set(0);

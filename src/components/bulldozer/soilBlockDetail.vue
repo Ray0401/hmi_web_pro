@@ -134,7 +134,8 @@
           :width="70"
           :height="35"
           color="#FF5900"
-          :value="btnStatus"
+          v-model="btnStatus"
+          :sync="true"
           @change="switchChange"
           :disabled="switchDisabled"
         />
@@ -172,7 +173,7 @@
 <script setup>
   import WorkDrawer from '@/components/components/workDrawer.vue';
   import { sendSocket } from '@/utils/utils';
-  import { computed } from 'vue';
+  import { ref, computed, watch } from 'vue';
   import { SOCKET_TYPE } from '@/constant/index';
   import { useStore } from '@/hooks/useStore';
   const store = useStore();
@@ -188,9 +189,7 @@
     },
   });
 
-  const btnStatus = computed(() => {
-    return props.detailData.basicInfo.status != 2;
-  });
+  const btnStatus = ref(false);
   const statusColor = computed(() => {
     const status = props.detailData.basicInfo.status ?? '2';
     return status == '1' ? '#00ff48' : status == '2' ? '#FF3000' : '#ffed3a';
@@ -206,6 +205,14 @@
     return (basicInfo.status == '2' && pointInfo.every(item => item.status == '2')) ?? false;
   });
 
+  watch(
+    () => props.detailData,
+    () => {
+      btnStatus.value = props.detailData.basicInfo.status == 2 ? false : true;
+    },
+    { immediate: true }
+  );
+
   // 申请清理排土块任务
   const handleClickButton = () => {
     const { object_id } = store.state.carInDumpPosition;
@@ -219,7 +226,7 @@
   };
 
   const switchChange = data => {
-    const { value } = data.value;
+    const { value } = data;
     const { object_id, packSpaceGroupNum, packSpaceGroupName } = store.state.carInDumpPosition;
     sendSocket({
       type: SOCKET_TYPE.SET_DUMP_STATUS,
