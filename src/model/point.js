@@ -2,7 +2,7 @@
  * @Author: 徐海瑞
  * @Date: 2023-01-31 10:38:01
  * @Last Modified by: 徐海瑞
- * @Last Modified time: 2024-09-26 13:48:35
+ * @Last Modified time: 2024-09-27 14:32:57
  *
  * 绘制停靠位
  *
@@ -222,7 +222,7 @@ class CPoint {
     material.onBeforeCompile = shader => {
       shader.fragmentShader = shader.fragmentShader.replace(
         'vec4 diffuseColor = vec4( diffuse, opacity );',
-        `if (distance(gl_PointCoord, vec2(0.5, 0.5)) > 0.5) discard;
+        `if (distance(gl_PointCoord, vec2(0.3, 0.3)) > 0.3) discard;
          vec4 diffuseColor = vec4( diffuse, opacity );`
       );
     };
