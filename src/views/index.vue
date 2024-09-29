@@ -55,7 +55,7 @@
   const terminalType = ref(null);
   const showNum = ref(0);
   const showModal = ref(false);
-  const message = ref('网络链接不稳定');
+  const message = ref('通信异常，请检查服务');
   const btnText = ref('自动重连中...');
   const disabled = ref(true);
 
@@ -90,7 +90,7 @@
       data['terminalType'] = vehicleTerminal;
       store.commit('setCarInfo', data);
       store.commit('setVehicleData', data);
-      message.value = '网络链接不稳定';
+      message.value = '通信异常，请检查服务';
       btnText.value = '自动重连中...';
       disabled.value = true;
       // setTimeout(() => {
